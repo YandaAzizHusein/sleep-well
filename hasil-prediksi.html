@@ -289,6 +289,21 @@
         <li>Gangguan Tidur: <b>${disorder}</b></li>
         ${advice.length > 0 ? `<li>Saran: <ul style="margin:0;padding-left:1.2em;">${advice.map(s=>`<li>${s}</li>`).join("")}</ul></li>` : ""}
       `;
+       // --- UPDATE DATA DI SUPABASE DENGAN HASIL PREDIKSI ---
+    try {
+      // Update record berdasarkan ID yang baru diinput (dari form)
+      await supabase.from('sleep_data')
+        .update({
+          quality_of_sleep: sleepQuality,
+          sleep_duration: sleepDuration,
+          sleep_disorder: disorder
+        })
+        .eq('id', inputData.sleep_data_id);
+      // Optional: bisa tampilkan pesan sukses update ke user
+    } catch (err) {
+      // Jika gagal update, tampilkan peringatan saja tapi jangan hentikan flow
+      document.getElementById("aiResult").innerHTML += `<li style="color:#e11d48;">Gagal simpan hasil prediksi ke database: ${err.message || err}</li>`;
+    }
       showMainContent();
     }
 
