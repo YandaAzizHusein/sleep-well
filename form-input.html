@@ -106,7 +106,9 @@
       <span class="header-title">SleepWell <span style="color:var(--blue)">AI</span></span>
     </div>
     <h2>Input Data Tidur Harian</h2>
-    <div id="userProfile"></div>
+    <div id="userProfile">
+      <!-- Profil user akan diisi via JS -->
+    </div>
     <form id="sleepForm" autocomplete="off">
       <div class="slider-row">
         <label for="Physical_Activity_Level">Aktivitas Fisik (1-100):</label>
@@ -139,9 +141,12 @@
     let userProfile = {};
     let userId = null;
 
-    async function fillProfile() {
+    // Cek session login user
+    async function cekSessionDanIsiProfil() {
+      document.getElementById("userProfile").innerHTML = "<em>Memuat profil pengguna...</em>";
       const { data: { user }, error } = await supabase.auth.getUser();
       if (!user) {
+        sessionStorage.clear();
         window.location.href = "login-user.html";
         return;
       }
@@ -160,7 +165,7 @@
         </fieldset>
       `;
     }
-    fillProfile();
+    cekSessionDanIsiProfil();
 
     // Slider value display
     document.getElementById("Physical_Activity_Level").oninput = function() {
@@ -190,6 +195,14 @@
       if (isNaN(steps) || steps < 0 || steps > 30000) {
         document.getElementById("inputMsg").innerText = "Langkah harian harus antara 0–30000.";
         document.getElementById("loader").style.display = 'none';
+        return;
+      }
+
+      // Pastikan user login sebelum submit (antisipasi edge case)
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        sessionStorage.clear();
+        window.location.href = "login-user.html";
         return;
       }
 
