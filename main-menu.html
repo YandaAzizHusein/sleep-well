@@ -110,9 +110,13 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // Session check on page load
     async function showUser() {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      document.getElementById("userWelcome").innerText = "Memuat...";
+      // Cek user session (wajib, agar halaman tidak bisa diakses tanpa login)
+      const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
+        sessionStorage.clear(); // pastikan bersih
         window.location.href = "login-user.html";
         return;
       }
