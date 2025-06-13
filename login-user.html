@@ -1,20 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Login SleepWell AI</title>
   <meta charset="UTF-8">
+  <title>Login SleepWell AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #303f9f 0%, #00bcd4 100%);
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
+      border-radius: 18px;
+      padding: 42px 32px 30px 32px;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadein 1s cubic-bezier(.42,0,.58,1);
+    }
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .login-container h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      color: #21243d;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+    .login-container p {
+      font-size: 1rem;
+      color: #757575;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    label {
+      font-size: .97rem;
+      color: #283046;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input[type="email"], input[type="password"] {
+      font-size: 1rem;
+      padding: 11px 14px;
+      border-radius: 9px;
+      border: 1.2px solid #d8dee9;
+      outline: none;
+      background: #f6fbfe;
+      transition: border 0.2s;
+      margin-bottom: 4px;
+    }
+    input[type="email"]:focus, input[type="password"]:focus {
+      border: 1.5px solid #00bcd4;
+      background: #f1fcff;
+    }
+    button[type="submit"] {
+      background: linear-gradient(100deg, #1976d2 50%, #00bcd4 100%);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 1.09rem;
+      padding: 12px 0;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px 0 rgba(0,188,212,0.12);
+      letter-spacing: 0.02em;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #00bcd4 20%, #1976d2 100%);
+      box-shadow: 0 6px 22px 0 rgba(0,188,212,0.13);
+      transform: translateY(-1.5px) scale(1.018);
+    }
+    #loginMsg {
+      color: #e53935;
+      font-weight: 500;
+      min-height: 22px;
+      margin-bottom: 8px;
+      text-align: center;
+      font-size: .98rem;
+      letter-spacing: -0.01em;
+    }
+    .register-link {
+      margin-top: 8px;
+      font-size: .98rem;
+      color: #1976d2;
+      text-align: center;
+    }
+    .register-link a {
+      color: #00bcd4;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .register-link a:hover {
+      color: #1976d2;
+      text-decoration: underline;
+    }
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 32px 14px 22px 14px;
+        max-width: 97vw;
+      }
+      .login-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Login SleepWell</h2>
-  <form id="loginForm">
-    <label>Email:</label><br>
-    <input name="email" type="email" required><br><br>
-    <label>Password:</label><br>
-    <input name="password" type="password" required><br><br>
-    <button type="submit">Login</button>
-  </form>
-  <div id="loginMsg" style="color:red; margin:10px 0;"></div>
-  <p>Belum punya akun? <a href="sign-up.html">Daftar di sini</a></p>
+  <div class="login-container">
+    <h2>SleepWell AI</h2>
+    <p>Masuk untuk melacak dan meningkatkan kualitas tidur Anda.</p>
+    <form id="loginForm" autocomplete="on">
+      <div>
+        <label for="email">Email</label>
+        <input name="email" id="email" type="email" required autocomplete="email" placeholder="nama@email.com">
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input name="password" id="password" type="password" required autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div id="loginMsg"></div>
+    <div class="register-link">
+      Belum punya akun? <a href="sign-up.html">Daftar di sini</a>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
@@ -26,18 +158,27 @@
       const fd = new FormData(this);
       const email = fd.get("email");
       const password = fd.get("password");
+      const btn = this.querySelector("button[type='submit']");
+      btn.disabled = true;
+      btn.textContent = "Loading...";
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      document.getElementById("loginMsg").innerText = "";
 
-      if (error) {
-        document.getElementById("loginMsg").innerText = "Email atau password salah!";
-      } else if (!data.user.email_confirmed_at) {
-        document.getElementById("loginMsg").innerText = "Email belum diverifikasi! Silakan cek inbox email kamu.";
-      } else {
-        // Simpan ID user ke sessionStorage
-        sessionStorage.setItem("user_id", data.user.id);
-        window.location.href = "main-menu.html";
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          document.getElementById("loginMsg").innerText = "Email atau password salah!";
+        } else if (!data.user.email_confirmed_at) {
+          document.getElementById("loginMsg").innerText = "Email belum diverifikasi! Silakan cek inbox email kamu.";
+        } else {
+          sessionStorage.setItem("user_id", data.user.id);
+          window.location.href = "main-menu.html";
+        }
+      } catch (e) {
+        document.getElementById("loginMsg").innerText = "Terjadi kesalahan sistem. Silakan coba lagi.";
       }
+      btn.disabled = false;
+      btn.textContent = "Login";
     };
   </script>
 </body>
