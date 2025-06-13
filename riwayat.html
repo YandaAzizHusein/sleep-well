@@ -1,40 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Riwayat Prediksi Tidur</title>
   <meta charset="UTF-8">
+  <title>Riwayat Prediksi Tidur • SleepWell AI</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="img/logo-sinyal-tenang.png"/>
+  <style>
+    :root {
+      --primary: #6751ef;
+      --blue: #2563eb;
+      --gray: #f5f7fa;
+      --border: #e0e4ea;
+      --danger: #e11d48;
+      --success: #16a34a;
+      --shadow: 0 4px 24px 0 rgba(66,71,112,0.08);
+    }
+    body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      margin: 0; color: #232336;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1100px; margin: 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-top: 36px;
+      padding: 36px 24px 28px 24px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .header img { width:38px; border-radius:8px; }
+    .header-title {
+      font-weight: 800; font-size: 1.5rem; color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+    h2 {
+      margin: 0 0 30px 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.2px;
+    }
+    #loader {
+      display: none;
+      color: var(--blue);
+      font-weight: 600;
+      margin-bottom: 18px;
+      padding: 7px 0 7px 4px;
+      font-size: 1rem;
+      background: #f2f8ff;
+      border-radius: 8px;
+      width: fit-content;
+    }
+    #errorMsg {
+      color: var(--danger);
+      font-weight: 500;
+      margin: 18px 0 0 0;
+      padding-left: 5px;
+    }
+    .actions {
+      margin: 16px 0 22px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .actions button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 1.3rem;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: .8rem 1.9rem;
+      box-shadow: 0 1px 7px 0 rgba(66,71,112,0.11);
+      cursor: pointer;
+      transition: background .18s, transform .18s;
+      margin-top: 5px;
+    }
+    .actions button:hover {
+      background: var(--blue);
+      transform: translateY(-2px) scale(1.03);
+    }
+    /* Table */
+    .table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      border-radius: 1rem;
+      margin-top: 5px;
+      background: var(--gray);
+      box-shadow: 0 2px 12px 0 rgba(66,71,112,0.06);
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 830px;
+      background: #fff;
+      font-size: 1rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin: 0;
+    }
+    th, td {
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    th {
+      background: #eef2fe;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.06rem;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 2px 5px 0 rgba(66,71,112,0.04);
+    }
+    tr:hover td {
+      background: #f3f8ff;
+      transition: background .15s;
+    }
+    td {
+      color: #36374a;
+      font-size: .99rem;
+    }
+    .no-data td {
+      color: #bbb; font-size: 1rem; text-align: center; padding: 24px 0;
+    }
+    /* Chart */
+    .chart-container {
+      max-width: 650px; margin: 34px auto 0 auto; background: #fafcff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px 0 rgba(66,71,112,0.07);
+      padding: 22px 22px 10px 22px;
+    }
+    @media (max-width: 900px) {
+      .container {padding: 25px 5vw;}
+      .chart-container {max-width: 99vw;}
+      th, td { font-size: .96rem; padding: 10px 7px;}
+    }
+    @media (max-width: 600px) {
+      .container {padding: 14px 2vw;}
+      .header-title { font-size: 1.15rem; }
+      h2 {font-size: 1.1rem;}
+      table {min-width: 620px;}
+    }
+  </style>
 </head>
 <body>
-  <h2>Riwayat Data & Prediksi Tidur Anda</h2>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
+      <span class="header-title">SleepWell <span style="color:var(--blue)">AI</span></span>
+    </div>
 
-  <!-- Loader -->
-  <div id="loader" style="display:none; margin-bottom:12px;">⏳ Mengambil data riwayat...</div>
-  
-  <!-- Tabel Riwayat -->
-  <table border="1" id="riwayatTable">
-    <tr>
-      <th>Tanggal</th>
-      <th>Aktivitas Fisik</th>
-      <th>Tingkat Stres</th>
-      <th>Detak Jantung</th>
-      <th>Langkah Harian</th>
-      <th>Kualitas Tidur</th>
-      <th>Durasi Tidur</th>
-      <th>Gangguan Tidur</th>
-    </tr>
-  </table>
+    <h2>Riwayat Data & Prediksi Tidur Anda</h2>
+    
+    <div id="loader">⏳ Mengambil data riwayat...</div>
 
-  <!-- Grafik Chart.js -->
-  <div style="margin-top:24px; max-width:600px;">
-    <canvas id="sleepChart"></canvas>
+    <div class="actions">
+      <button onclick="window.location.href='form-input.html'">Input Baru</button>
+      <button onclick="window.location.href='main-menu.html'">Menu Utama</button>
+      <button onclick="logout()">Logout</button>
+      <button onclick="downloadCSV()">Download CSV</button>
+    </div>
+    
+    <div class="table-wrap">
+      <table id="riwayatTable">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Aktivitas Fisik</th>
+            <th>Tingkat Stres</th>
+            <th>Detak Jantung</th>
+            <th>Langkah Harian</th>
+            <th>Kualitas Tidur</th>
+            <th>Durasi Tidur</th>
+            <th>Gangguan Tidur</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="sleepChart"></canvas>
+    </div>
+
+    <div id="errorMsg"></div>
   </div>
-
-  <button onclick="window.location.href='form-input.html'">Input Baru</button>
-  <button onclick="window.location.href='main-menu.html'">Menu Utama</button>
-  <button onclick="logout()">Logout</button>
-  <button onclick="downloadCSV()">Download CSV</button>
-  
-  <div id="errorMsg" style="color:red; margin-top:10px;"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -45,25 +207,23 @@
 
     let lastRiwayatData = [];
 
-    // Logout handler, sign out dari Auth juga!
+    // Logout handler
     async function logout() {
       sessionStorage.clear();
       await supabase.auth.signOut();
       window.location.href = "login-user.html";
     }
 
-    // Ambil riwayat setelah cek login via Auth
     async function tampilRiwayat() {
       document.getElementById('loader').style.display = 'block';
       document.getElementById('errorMsg').innerText = '';
-
-      // Cek login via Supabase Auth
+      document.querySelector('#riwayatTable tbody').innerHTML = '';
+      
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         window.location.href = "login-user.html";
         return;
       }
-      // Sync user_id ke sessionStorage untuk halaman lain (optional, biar seragam)
       sessionStorage.setItem("user_id", user.id);
 
       try {
@@ -90,17 +250,16 @@
                 <td>${r.sleep_duration ?? '-'}</td>
                 <td>${r.sleep_disorder ?? '-'}</td>
               </tr>`;
-            // Untuk grafik, masukkan walau null (Chart.js akan handle gap)
             labels.push(r.created_at?.slice(0, 10) || '');
             qualities.push((r.quality_of_sleep !== undefined && r.quality_of_sleep !== null && r.quality_of_sleep !== '') ? Number(r.quality_of_sleep) : null);
             durations.push((r.sleep_duration !== undefined && r.sleep_duration !== null && r.sleep_duration !== '') ? Number(r.sleep_duration) : null);
           }
-          document.getElementById('riwayatTable').innerHTML += rows;
+          document.querySelector('#riwayatTable tbody').innerHTML = rows;
         } else {
-          document.getElementById('riwayatTable').innerHTML += `<tr><td colspan="8">Belum ada data riwayat.</td></tr>`;
+          document.querySelector('#riwayatTable tbody').innerHTML = `<tr class="no-data"><td colspan="8">Belum ada data riwayat.</td></tr>`;
         }
 
-        // Render grafik jika ada minimal 1 data
+        // Render Chart
         const chartEl = document.getElementById('sleepChart').getContext('2d');
         if (window.sleepChartInstance) window.sleepChartInstance.destroy();
 
@@ -113,14 +272,28 @@
             data: {
               labels: reversedLabels,
               datasets: [
-                { label: 'Kualitas Tidur', data: reversedQualities, borderWidth: 2, fill: false, spanGaps: true },
-                { label: 'Durasi Tidur (jam)', data: reversedDurations, borderWidth: 2, fill: false, spanGaps: true }
+                {
+                  label: 'Kualitas Tidur',
+                  data: reversedQualities,
+                  borderWidth: 2,
+                  fill: false,
+                  spanGaps: true,
+                  tension: 0.25
+                },
+                {
+                  label: 'Durasi Tidur (jam)',
+                  data: reversedDurations,
+                  borderWidth: 2,
+                  fill: false,
+                  spanGaps: true,
+                  tension: 0.25
+                }
               ]
             },
             options: {
               responsive: true,
               plugins: { legend: { display: true }},
-              scales: { y: { beginAtZero: true } }
+              scales: { y: { beginAtZero: true, title: { display: true, text: 'Nilai' }} }
             }
           });
         } else if (labels.length === 1) {
@@ -147,12 +320,12 @@
               plugins: { legend: { display: true }},
               scales: {
                 x: { type: 'category', labels: [labels[0]] },
-                y: { beginAtZero: true }
+                y: { beginAtZero: true, title: { display: true, text: 'Nilai' }}
               }
             }
           });
         }
-        // Jika tidak ada data, grafik akan kosong.
+        // Grafik kosong jika tidak ada data
       } catch (err) {
         document.getElementById('loader').style.display = 'none';
         document.getElementById('errorMsg').innerText = "Gagal mengambil riwayat: " + (err.message || err);
@@ -160,7 +333,6 @@
     }
     tampilRiwayat();
 
-    // Download CSV fungsi
     function downloadCSV() {
       if (!lastRiwayatData.length) {
         alert("Tidak ada data untuk diunduh!");
