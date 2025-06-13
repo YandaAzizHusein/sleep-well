@@ -88,7 +88,6 @@
       background: var(--blue);
       transform: translateY(-2px) scale(1.03);
     }
-    /* Table */
     .table-wrap {
       max-width: 100%;
       overflow-x: auto;
@@ -133,7 +132,6 @@
     .no-data td {
       color: #bbb; font-size: 1rem; text-align: center; padding: 24px 0;
     }
-    /* Chart */
     .chart-container {
       max-width: 650px; margin: 34px auto 0 auto; background: #fafcff;
       border-radius: 18px;
@@ -169,7 +167,7 @@
       <button onclick="window.location.href='form-input.html'">Input Baru</button>
       <button onclick="window.location.href='main-menu.html'">Menu Utama</button>
       <button onclick="logout()">Logout</button>
-      <button onclick="downloadCSV()">Download CSV</button>
+      <button onclick="downloadCSV()" id="btnDownload">Download CSV</button>
     </div>
     
     <div class="table-wrap">
@@ -207,6 +205,18 @@
 
     let lastRiwayatData = [];
 
+    // Proteksi login/session
+    async function cekSession() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        sessionStorage.clear();
+        window.location.href = "login-user.html";
+        return null;
+      }
+      sessionStorage.setItem("user_id", user.id);
+      return user;
+    }
+
     // Logout handler
     async function logout() {
       sessionStorage.clear();
@@ -218,13 +228,10 @@
       document.getElementById('loader').style.display = 'block';
       document.getElementById('errorMsg').innerText = '';
       document.querySelector('#riwayatTable tbody').innerHTML = '';
+      document.getElementById("btnDownload").disabled = true;
       
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        window.location.href = "login-user.html";
-        return;
-      }
-      sessionStorage.setItem("user_id", user.id);
+      const user = await cekSession();
+      if (!user) return;
 
       try {
         const { data, error } = await supabase.from('sleep_data')
@@ -255,8 +262,10 @@
             durations.push((r.sleep_duration !== undefined && r.sleep_duration !== null && r.sleep_duration !== '') ? Number(r.sleep_duration) : null);
           }
           document.querySelector('#riwayatTable tbody').innerHTML = rows;
+          document.getElementById("btnDownload").disabled = false;
         } else {
           document.querySelector('#riwayatTable tbody').innerHTML = `<tr class="no-data"><td colspan="8">Belum ada data riwayat.</td></tr>`;
+          document.getElementById("btnDownload").disabled = true;
         }
 
         // Render Chart
@@ -325,10 +334,10 @@
             }
           });
         }
-        // Grafik kosong jika tidak ada data
       } catch (err) {
         document.getElementById('loader').style.display = 'none';
         document.getElementById('errorMsg').innerText = "Gagal mengambil riwayat: " + (err.message || err);
+        document.getElementById("btnDownload").disabled = true;
       }
     }
     tampilRiwayat();
