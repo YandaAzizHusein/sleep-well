@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Utama SleepWell AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/main-menu.css" />
+</head>
+<body class="main-menu">
+  <div class="main-container">
+    <h2>Menu Utama SleepWell</h2>
+    <div id="userWelcome">Memuat...</div>
+    <div class="btn-group">
+      <button class="menu-btn" onclick="window.location.href='form-input.html'">
+        Input Data Tidur
+      </button>
+      <button class="menu-btn" onclick="window.location.href='riwayat.html'">
+        Riwayat Prediksi
+      </button>
+      <button class="menu-btn logout" onclick="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
+    const supabaseKey = 'YOUR_SUPABASE_KEY_HERE';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Session check on page load
+    async function showUser() {
+      document.getElementById("userWelcome").innerText = "Memuat...";
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        sessionStorage.clear();
+        window.location.href = "login-user.html";
+        return;
+      }
+      const name = user.user_metadata?.name || user.email;
+      document.getElementById("userWelcome").innerText = `Halo, ${name}!`;
+      sessionStorage.setItem("user_id", user.id);
+    }
+    showUser();
+
+    async function logout() {
+      sessionStorage.clear();
+      await supabase.auth.signOut();
+      window.location.href = "login-user.html";
+    }
+  </script>
+</body>
+</html>
