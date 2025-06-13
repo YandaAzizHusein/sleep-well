@@ -1,32 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Input Data Tidur</title>
   <meta charset="UTF-8">
+  <title>Input Data Tidur Harian • SleepWell AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="img/logo-sinyal-tenang.png"/>
+  <style>
+    :root {
+      --primary: #6751ef;
+      --blue: #2563eb;
+      --background: #f5f7fa;
+      --gray: #eef2fe;
+      --shadow: 0 4px 24px 0 rgba(66,71,112,0.07);
+      --danger: #e11d48;
+    }
+    body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      margin: 0; color: #232336;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 410px; margin: 48px auto 0 auto;
+      background: #fff; border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 34px 20px 24px 20px;
+    }
+    .header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .header img { width:38px; border-radius:8px; }
+    .header-title {
+      font-weight: 800; font-size: 1.3rem; color: var(--primary); letter-spacing: .5px;
+    }
+    h2 {
+      font-size: 1.2rem; color: var(--blue);
+      font-weight: 700; margin: 0 0 28px 0; text-align: center;
+    }
+    #userProfile fieldset {
+      border: 1px solid var(--gray); border-radius: 10px; background: #f9faff;
+      margin-bottom: 14px;
+      padding: 10px 12px 7px 12px;
+    }
+    #userProfile legend {
+      font-weight: 700; color: var(--primary); font-size: 1rem;
+    }
+    #userProfile input {
+      border: none; background: #f5f7fb;
+      color: #555; border-radius: 5px; font-size: .97rem;
+      margin-bottom: 5px; margin-left: 6px; width: 90px; padding: 3px 4px;
+    }
+    #userProfile input:focus { outline: none; }
+    form label { font-weight: 500; display: block; margin-bottom: 3px; }
+    form input[type=number] {
+      width: 100%; padding: .6rem .7rem; font-size: 1rem;
+      border: 1.5px solid var(--gray); border-radius: .7rem; background: #f9faff;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      transition: border .15s;
+    }
+    form input[type=number]:focus { border-color: var(--primary); outline: none;}
+    .slider-row {
+      display: flex; align-items: center; gap: 9px; margin-bottom: 20px;
+    }
+    .slider-row label { margin: 0; flex:1; }
+    .slider-row input[type=range] { flex:2; margin: 0 7px; }
+    .slider-value {
+      background: var(--gray); border-radius: 8px; color: var(--blue);
+      padding: 3px 12px; font-weight: bold; min-width: 30px; text-align: center; font-size: 1rem;
+      border: 1.2px solid var(--gray);
+    }
+    button[type=submit] {
+      background: var(--primary); color: #fff; border: none; border-radius: 1.2rem;
+      padding: .9rem 1.7rem; font-size: 1.1rem; font-weight: 700;
+      width: 100%; margin-top: 12px;
+      box-shadow: 0 2px 9px 0 rgba(66,71,112,.08);
+      cursor: pointer; transition: background .17s, transform .17s;
+    }
+    button[type=submit]:hover { background: var(--blue); transform: translateY(-2px) scale(1.02);}
+    .btn-back {
+      width: 100%; margin-top: 12px; background: #f3f5fb; color: var(--primary);
+      border-radius: 1.2rem; border: none; padding: .8rem 0; font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-back:hover { background: var(--gray);}
+    #inputMsg {
+      margin: 14px 0; color: var(--danger); font-weight: 500; text-align: center;
+    }
+    #loader {
+      display:none; color: var(--blue); font-weight: 600; margin: 10px 0; text-align: center;
+    }
+    @media (max-width: 600px) {
+      .container {padding: 20px 2vw;}
+      .header-title { font-size: 1rem; }
+      h2 {font-size: 1rem;}
+    }
+  </style>
 </head>
 <body>
-  <h2>Input Data Tidur Harian</h2>
-  <div id="userProfile"></div>
-  <form id="sleepForm">
-    <label>Aktivitas Fisik (1-100):</label>
-    <input type="range" id="Physical_Activity_Level" min="1" max="100" value="50">
-    <span id="physicalActivityValue">50</span><br><br>
-
-    <label>Tingkat Stres (1-10):</label>
-    <input type="range" id="Stress_Level" min="1" max="10" value="5">
-    <span id="stressLevelValue">5</span><br><br>
-
-    <label>Detak Jantung (BPM):</label>
-    <input type="number" id="Heart_Rate" min="40" max="200" required><br><br>
-
-    <label>Langkah Harian:</label>
-    <input type="number" id="Daily_Steps" min="0" max="30000" required><br><br>
-
-    <button type="submit">Kirim & Analisis</button>
-  </form>
-  <div id="inputMsg" style="margin:12px 0; color:red;"></div>
-  <div id="loader" style="display:none; margin-bottom:12px;">⏳ Menyimpan data, mohon tunggu...</div>
-  <button onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+  <div class="container">
+    <!-- Header Branding -->
+    <div class="header">
+      <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
+      <span class="header-title">SleepWell <span style="color:var(--blue)">AI</span></span>
+    </div>
+    <h2>Input Data Tidur Harian</h2>
+    <div id="userProfile"></div>
+    <form id="sleepForm" autocomplete="off">
+      <div class="slider-row">
+        <label for="Physical_Activity_Level">Aktivitas Fisik (1-100):</label>
+        <input type="range" id="Physical_Activity_Level" min="1" max="100" value="50">
+        <span id="physicalActivityValue" class="slider-value">50</span>
+      </div>
+      <div class="slider-row">
+        <label for="Stress_Level">Tingkat Stres (1-10):</label>
+        <input type="range" id="Stress_Level" min="1" max="10" value="5">
+        <span id="stressLevelValue" class="slider-value">5</span>
+      </div>
+      <label for="Heart_Rate">Detak Jantung (BPM):</label>
+      <input type="number" id="Heart_Rate" min="40" max="200" required placeholder="cth: 70">
+      <label for="Daily_Steps">Langkah Harian:</label>
+      <input type="number" id="Daily_Steps" min="0" max="30000" required placeholder="cth: 8000">
+      <button type="submit">Kirim &amp; Analisis</button>
+    </form>
+    <div id="inputMsg"></div>
+    <div id="loader">⏳ Menyimpan data, mohon tunggu...</div>
+    <button class="btn-back" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
@@ -45,21 +146,18 @@
         return;
       }
       userId = user.id;
-      // Simpan userId di sessionStorage jika belum ada (untuk halaman lain)
       sessionStorage.setItem("user_id", userId);
 
-      // Ambil profil dari metadata Auth
       userProfile = user.user_metadata || {};
       document.getElementById("userProfile").innerHTML = `
         <fieldset>
           <legend>Profil Anda</legend>
-          Nama: <input value="${userProfile.name || ''}" readonly><br>
-          Gender: <input value="${userProfile.gender || ''}" readonly><br>
-          Umur: <input value="${userProfile.age || ''}" readonly><br>
-          Pekerjaan: <input value="${userProfile.occupation || ''}" readonly><br>
-          BMI: <input value="${userProfile.bmi_category || ''}" readonly><br>
+          Nama: <input value="${userProfile.name || ''}" readonly>
+          Gender: <input value="${userProfile.gender || ''}" readonly>
+          Umur: <input value="${userProfile.age || ''}" readonly>
+          Pekerjaan: <input value="${userProfile.occupation || ''}" readonly>
+          BMI: <input value="${userProfile.bmi_category || ''}" readonly>
         </fieldset>
-        <br>
       `;
     }
     fillProfile();
@@ -95,7 +193,6 @@
         return;
       }
 
-      // Simpan ke sleep_data
       try {
         const { data: insertData, error } = await supabase.from("sleep_data").insert([{
           user_id: userId,
@@ -106,7 +203,6 @@
           created_at: new Date()
         }]).select("id").single();
         if (error) throw error;
-        // Simpan input + profil ke sessionStorage (untuk hasil prediksi)
         sessionStorage.setItem("sleep_input", JSON.stringify({
           gender: userProfile.gender,
           age: userProfile.age,
