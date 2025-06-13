@@ -6,313 +6,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/logo-sinyal-tenang.png"/>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
-      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
-      min-height: 100vh;
+    body { margin:0; font-family:'Segoe UI','Inter',Arial,sans-serif; background:linear-gradient(135deg,#e0e7ff 0%,#f6dfff 100%); min-height:100vh;}
+    .wrap {display:flex;align-items:center;justify-content:center;min-height:100vh;}
+    .card {
+      background:#fff; max-width:430px; width:100%; border-radius:1.6rem;
+      box-shadow:0 8px 40px 0 rgba(103,81,239,0.13);
+      padding:38px 26px 26px 26px; margin: 36px 0; display:flex;flex-direction:column;gap:18px;animation:fadein .6s;
     }
-    .center-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      width: 100vw;
-    }
-    .form-card {
-      background: #fff;
-      padding: 34px 28px 24px 28px;
-      border-radius: 1.7rem;
-      box-shadow: 0 8px 40px 0 rgba(103,81,239,0.13);
-      max-width: 420px;
-      width: 100%;
-      margin: 40px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      animation: fadein .6s;
-    }
-    @keyframes fadein {
-      from {opacity: 0; transform: translateY(30px);}
-      to   {opacity: 1; transform: none;}
-    }
-    .logo-row {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-    }
-    .logo-row img { width: 38px; border-radius: 7px;}
-    .app-title {
-      font-size: 1.21rem;
-      font-weight: 800;
-      color: #6751ef;
-      letter-spacing: .2px;
-    }
-    .form-title {
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: #2563eb;
-      margin-bottom: 7px;
-    }
-    .profile-box {
-      background: #f7f8fd;
-      border: 1.2px solid #eef2fe;
-      border-radius: 10px;
-      font-size: .97rem;
-      margin-bottom: 5px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 16px;
-      padding: 8px 10px 4px 10px;
-      color: #233;
-      box-sizing: border-box;
-    }
-    .profile-label {
-      color: #888;
-      font-weight: 600;
-    }
-    .profile-value {
-      font-weight: 500;
-    }
-    .result-group {
-      background: #eef2fe;
-      border-radius: 1.1rem;
-      padding: 14px 14px 10px 14px;
-      margin-bottom: 5px;
-    }
-    .result-title {
-      font-size: 1.04rem;
-      font-weight: 700;
-      color: #2563eb;
-      margin-bottom: 5px;
-    }
-    .result-list {
-      margin: 0; padding: 0 0 0 0.6em;
-      list-style: disc;
-    }
-    .result-list li {
-      margin-bottom: 5px;
-      color: #353a5a;
-      font-size: 1rem;
-    }
-    .alert {
-      text-align: center;
-      color: #e11d48;
-      background: #fff1f2;
-      border: 1.2px solid #ffe4e6;
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin: 2px 0 8px 0;
-      font-size: .98rem;
-      font-weight: 500;
-      display: none;
-    }
-    .loader {
-      display: none;
-      text-align: center;
-      color: #2563eb;
-      font-weight: 600;
-      margin: 8px 0 8px 0;
-    }
-    .button-main {
-      width: 100%;
-      background: linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
-      color: #fff;
-      border: none;
-      font-size: 1.13rem;
-      font-weight: 700;
-      border-radius: 1.2em;
-      padding: 1em 0;
-      margin-top: 8px;
-      margin-bottom: 2px;
-      cursor: pointer;
-      transition: background .16s, box-shadow .16s, transform .15s;
-      box-shadow: 0 2px 12px 0 rgba(103,81,239,0.11);
-    }
-    .button-main:hover {
-      background: linear-gradient(90deg,#2563eb 10%,#6751ef 100%);
-      transform: translateY(-1.5px) scale(1.015);
-    }
-    .button-outline {
-      width: 100%;
-      background: none;
-      color: #6751ef;
-      border: 1.2px solid #e1e6fd;
-      border-radius: 1.2em;
-      padding: .9em 0;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 6px;
-      transition: background .14s, color .14s;
-    }
-    .button-outline:hover {
-      background: #f4f6fd;
-      color: #2563eb;
-    }
-    @media (max-width:600px){
-      .form-card {max-width:98vw; padding:18px 4vw 20px 4vw;}
-      .profile-box {grid-template-columns:1fr;}
-    }
+    @keyframes fadein { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:none;}}
+    .title {font-size:1.3rem;font-weight:800;color:#2563eb;margin-bottom:2px;}
+    .sub {font-size:1rem;font-weight:600;color:#888;margin-bottom:7px;}
+    .result-box {background:#f7f8fd;border-radius:10px;padding:14px 16px;font-size:1.12rem;color:#232;}
+    .row {margin:7px 0;}
+    .label {color:#888;font-weight:600;}
+    .value {font-weight:700;}
+    .btn {margin-top:16px;background:linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
+      color:#fff;border:none;font-size:1.13rem;font-weight:700;
+      border-radius:1.1em;padding:1em 0;cursor:pointer;width:100%;
+      transition:background .17s,transform .13s,box-shadow .13s;}
+    .btn:hover {background:linear-gradient(90deg,#2563eb 10%,#6751ef 100%);transform:translateY(-1.5px) scale(1.015);}
+    .alert {text-align:center;color:#e11d48;background:#fff1f2;border:1.2px solid #ffe4e6;
+      border-radius:8px;padding:8px 12px;margin:4px 0 8px 0;font-size:.98rem;font-weight:500;display:none;}
+    .loader {text-align:center;color:#2563eb;font-weight:600;margin:8px 0;display:none;}
+    @media(max-width:600px){.card{max-width:98vw;padding:18px 4vw 16px 4vw;}}
   </style>
 </head>
 <body>
-  <div class="center-wrap">
-    <div class="form-card" id="mainContent" style="display:none">
-      <div class="logo-row">
-        <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
-        <span class="app-title">SleepWell <span style="color:#2563eb">AI</span></span>
+  <div class="wrap">
+    <div class="card">
+      <div class="title">Hasil Prediksi Tidur</div>
+      <div class="sub" id="profileBox"></div>
+      <div class="result-box" id="predictionResult">
+        <!-- Hasil prediksi tampil di sini -->
       </div>
-      <div class="form-title">Hasil Prediksi & Analisis Tidur</div>
-      <div class="profile-box" id="profileBox">
-        <!-- Profil user dari input terakhir -->
-      </div>
-      <div class="result-group">
-        <div class="result-title">Data Input Terakhir:</div>
-        <ul class="result-list" id="inputResult"></ul>
-      </div>
-      <div class="result-group">
-        <div class="result-title">Prediksi & Insight:</div>
-        <ul class="result-list" id="aiResult">
-          <li>Menghitung prediksi dan insight...</li>
-        </ul>
-      </div>
-      <button class="button-main" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
-      <button class="button-outline" onclick="window.location.href='riwayat.html'">Lihat Riwayat</button>
+      <div class="loader" id="loader">⏳ Mengupdate hasil prediksi...</div>
+      <div class="alert" id="alertMsg"></div>
+      <button class="btn" onclick="window.location.href='riwayat.html'">Lihat Riwayat & Grafik</button>
+      <button class="btn" style="background:#f3f5fb;color:#2563eb;margin-top:2px;" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
     </div>
-    <div class="alert" id="errMsg"></div>
-    <div class="loader" id="loader">⏳ Memuat hasil prediksi...</div>
   </div>
 
-<!-- ... [HTML dan CSS tetap, tidak perlu diubah] ... -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script>
-  const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  async function checkSession() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      sessionStorage.clear();
-      window.location.href = "login-user.html";
-      return false;
+    let sleepInput = {};
+    let sleep_data_id = null;
+
+    function showLoader(show, msg) {
+      document.getElementById("loader").style.display = show ? "block" : "none";
+      if (msg) document.getElementById("loader").innerText = msg;
     }
-    return true;
-  }
-
-  function showError(msg) {
-    document.getElementById('errMsg').style.display = 'block';
-    document.getElementById('errMsg').innerText = msg;
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'none';
-  }
-
-  function showLoader(msg) {
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('loader').innerText = msg || '⏳ Memuat hasil prediksi...';
-    document.getElementById('errMsg').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'none';
-  }
-
-  function showMainContent() {
-    document.getElementById('errMsg').style.display = 'none';
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex';
-  }
-
-  async function renderResult() {
-    showLoader();
-    if (!await checkSession()) return;
-
-    const inputDataRaw = sessionStorage.getItem('sleep_input');
-    if (!inputDataRaw) {
-      showError("Data input tidak ditemukan atau sudah expired. Silakan input data tidur lagi.");
-      setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
-      return;
+    function showAlert(msg) {
+      const el = document.getElementById("alertMsg");
+      el.style.display = "block"; el.innerText = msg;
     }
-    let inputData;
-    try {
-      inputData = JSON.parse(inputDataRaw);
-    } catch {
-      showError("Data input rusak. Silakan input ulang.");
-      setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
-      return;
+    function hideAlert() { document.getElementById("alertMsg").style.display = "none"; }
+
+    function tampilProfil() {
+      const p = sleepInput;
+      document.getElementById("profileBox").innerHTML =
+        `<span class="label">Nama:</span> <span class="value">${p.name || '-'}</span> | 
+         <span class="label">Gender:</span> <span class="value">${p.gender || '-'}</span> | 
+         <span class="label">Umur:</span> <span class="value">${p.age || '-'}</span> | 
+         <span class="label">Pekerjaan:</span> <span class="value">${p.occupation || '-'}</span> | 
+         <span class="label">BMI:</span> <span class="value">${p.bmi_category || '-'}</span>`;
     }
 
-    // Profil user
-    document.getElementById("profileBox").innerHTML = `
-      <div class="profile-label">Nama:</div><div class="profile-value">${inputData.name || '-'}</div>
-      <div class="profile-label">Gender:</div><div class="profile-value">${inputData.gender || '-'}</div>
-      <div class="profile-label">Umur:</div><div class="profile-value">${inputData.age || '-'}</div>
-      <div class="profile-label">Pekerjaan:</div><div class="profile-value">${inputData.occupation || '-'}</div>
-      <div class="profile-label">BMI:</div><div class="profile-value">${inputData.bmi_category || '-'}</div>
-    `;
-    // Data input terakhir
-    document.getElementById("inputResult").innerHTML = `
-      <li>Aktivitas Fisik: <b>${inputData.Physical_Activity_Level}</b> / 100</li>
-      <li>Tingkat Stres: <b>${inputData.Stress_Level}</b> / 10</li>
-      <li>Detak Jantung: <b>${inputData.Heart_Rate}</b> BPM</li>
-      <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
-    `;
+    async function runPredictionAndUpdate() {
+      // 1. Ambil data dari sessionStorage
+      try {
+        sleepInput = JSON.parse(sessionStorage.getItem("sleep_input") || "{}");
+        sleep_data_id = sleepInput.sleep_data_id;
+      } catch { showAlert("Gagal membaca data input!"); return; }
 
-    // --- RULE SIMPLE PREDIKSI ---
-    let sleepQuality = "Normal";
-    let disorder = "-";
-    let advice = [];
-    let sleepDuration = 7; // PASTIKAN ADA DI SINI
+      tampilProfil();
 
-    if (inputData.Stress_Level > 7) {
-      sleepQuality = "Kurang";
-      disorder = "Risiko insomnia atau kualitas tidur rendah";
-      advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
-      sleepDuration = 5.5;
-    }
-    if (inputData.Physical_Activity_Level < 25) {
-      sleepQuality = "Kurang";
-      disorder = "Kurang olahraga";
-      advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
-      sleepDuration = 6;
-    }
-    if (inputData.Heart_Rate > 100) {
-      advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
-    }
-    if (inputData.Daily_Steps < 3000) {
-      advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
-      sleepDuration -= 0.5;
-    }
-    if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
-      advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
-      sleepDuration = 7.5;
+      // 2. [SIMULASI] Hasil prediksi dummy, ganti dengan hasil model kamu jika sudah live
+      const predictedQuality = Math.floor(Math.random()*30)+70;   // ex: 70-99
+      const predictedDuration = (Math.random()*2+6).toFixed(1);   // ex: 6.0-8.0 jam
+      const predictedDisorder = predictedQuality < 75 ? "Insomnia Ringan" : (predictedQuality < 85 ? "Tidur Kurang" : "Normal");
+
+      // 3. Tampilkan di halaman
+      document.getElementById("predictionResult").innerHTML =
+        `<div class="row"><span class="label">Kualitas Tidur:</span> <span class="value">${predictedQuality} / 100</span></div>
+         <div class="row"><span class="label">Durasi Tidur:</span> <span class="value">${predictedDuration} jam</span></div>
+         <div class="row"><span class="label">Gangguan Tidur:</span> <span class="value">${predictedDisorder}</span></div>`;
+
+      // 4. Update ke Supabase
+      showLoader(true, "⏳ Mengupdate hasil prediksi...");
+      hideAlert();
+      try {
+        const { error } = await supabase.from('sleep_data')
+          .update({
+            quality_of_sleep: predictedQuality,
+            sleep_duration: predictedDuration,
+            sleep_disorder: predictedDisorder
+          })
+          .eq('id', sleep_data_id);
+        showLoader(false);
+        if (error) showAlert("Gagal update hasil prediksi: " + error.message);
+      } catch (err) {
+        showLoader(false);
+        showAlert("Gagal update data: " + (err.message || err));
+      }
     }
 
-    // --- DEBUG: LOG SLEEP DURATION
-    console.log("sleepDuration =", sleepDuration);
-
-    // Tampilkan hasil prediksi ke user
-    document.getElementById("aiResult").innerHTML = `
-      <li>Kualitas Tidur: <b>${sleepQuality}</b></li>
-      <li>Gangguan Tidur: <b>${disorder}</b></li>
-      ${advice.length > 0 ? `<li>Saran: <ul style="margin:0;padding-left:1.2em;">${advice.map(s=>`<li>${s}</li>`).join("")}</ul></li>` : ""}
-    `;
-
-    // --- UPDATE DATA DI SUPABASE DENGAN HASIL PREDIKSI ---
-    try {
-      await supabase.from('sleep_data')
-        .update({
-          quality_of_sleep: sleepQuality,
-          sleep_duration: sleepDuration,
-          sleep_disorder: disorder
-        })
-        .eq('id', Number(inputData.sleep_data_id));
-      console.log('sleep_data_id di session:', inputData.sleep_data_id, typeof inputData.sleep_data_id);
-    } catch (err) {
-      document.getElementById("aiResult").innerHTML += `<li style="color:#e11d48;">Gagal simpan hasil prediksi ke database: ${err.message || err}</li>`;
-    }
-
-    showMainContent();
-  }
-
-  renderResult();
-</script>
-
+    // Jalankan prediksi dan update setelah halaman siap
+    window.onload = runPredictionAndUpdate;
+  </script>
 </body>
 </html>
