@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Input Data Tidur Harian • SleepWell AI</title>
+  <title>Hasil Prediksi Tidur • SleepWell AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/logo-sinyal-tenang.png"/>
   <style>
@@ -29,7 +29,7 @@
       margin: 40px 0;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
       animation: fadein .6s;
     }
     @keyframes fadein {
@@ -72,56 +72,46 @@
     .profile-value {
       font-weight: 500;
     }
-    .input-group {
-      margin: 7px 0 0 0;
-    }
-    .input-label-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 500;
-      margin-bottom: 3px;
-      font-size: .99rem;
-    }
-    .slider-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .slider-wrap input[type=range] {
-      flex: 1;
-      accent-color: #6751ef;
-      height: 5px;
-    }
-    .slider-value {
-      min-width: 36px;
+    .result-group {
       background: #eef2fe;
+      border-radius: 1.1rem;
+      padding: 14px 14px 10px 14px;
+      margin-bottom: 5px;
+    }
+    .result-title {
+      font-size: 1.04rem;
+      font-weight: 700;
       color: #2563eb;
-      font-weight: bold;
-      font-size: 1.08rem;
+      margin-bottom: 5px;
+    }
+    .result-list {
+      margin: 0; padding: 0 0 0 0.6em;
+      list-style: disc;
+    }
+    .result-list li {
+      margin-bottom: 5px;
+      color: #353a5a;
+      font-size: 1rem;
+    }
+    .alert {
       text-align: center;
-      border-radius: .8em;
-      border: 1px solid #eef2fe;
-      padding: 3px 7px;
+      color: #e11d48;
+      background: #fff1f2;
+      border: 1.2px solid #ffe4e6;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 2px 0 8px 0;
+      font-size: .98rem;
+      font-weight: 500;
+      display: none;
     }
-    .input-box {
-      width: 100%;
-      border: 1.3px solid #eef2fe;
-      border-radius: .9em;
-      padding: .8em 1em;
-      font-size: 1.09rem;
-      font-family: inherit;
-      margin-bottom: 0;
-      margin-top: 2px;
-      background: #f9fafd;
-      transition: border .15s, box-shadow .15s;
+    .loader {
+      display: none;
+      text-align: center;
+      color: #2563eb;
+      font-weight: 600;
+      margin: 8px 0 8px 0;
     }
-    .input-box:focus {
-      border: 1.6px solid #6751ef;
-      outline: none;
-      box-shadow: 0 0 0 2px #e3d8fd33;
-    }
-    .input-box::placeholder { color: #bbc; font-size: .98em; }
     .button-main {
       width: 100%;
       background: linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
@@ -158,25 +148,6 @@
       background: #f4f6fd;
       color: #2563eb;
     }
-    .alert {
-      text-align: center;
-      color: #e11d48;
-      background: #fff1f2;
-      border: 1.2px solid #ffe4e6;
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin: 4px 0 8px 0;
-      font-size: .98rem;
-      font-weight: 500;
-      display: none;
-    }
-    .loader {
-      display: none;
-      text-align: center;
-      color: #2563eb;
-      font-weight: 600;
-      margin: 8px 0 8px 0;
-    }
     @media (max-width:600px){
       .form-card {max-width:98vw; padding:18px 4vw 20px 4vw;}
       .profile-box {grid-template-columns:1fr;}
@@ -185,169 +156,143 @@
 </head>
 <body>
   <div class="center-wrap">
-    <form class="form-card" id="sleepForm" autocomplete="off">
+    <div class="form-card" id="mainContent" style="display:none">
       <div class="logo-row">
         <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
         <span class="app-title">SleepWell <span style="color:#2563eb">AI</span></span>
       </div>
-      <div class="form-title">Input Data Tidur Harian</div>
-
-      <div class="profile-box" id="userProfile">
-        <!-- Diisi dari JS -->
+      <div class="form-title">Hasil Prediksi & Analisis Tidur</div>
+      <div class="profile-box" id="profileBox">
+        <!-- Profil user dari input terakhir -->
       </div>
-
-      <div class="input-group">
-        <div class="input-label-row">
-          <label for="Physical_Activity_Level">Aktivitas Fisik (1-100):</label>
-          <span id="physicalActivityValue" class="slider-value">50</span>
-        </div>
-        <div class="slider-wrap">
-          <input type="range" id="Physical_Activity_Level" min="1" max="100" value="50" aria-valuenow="50" aria-label="Aktivitas Fisik">
-        </div>
+      <div class="result-group">
+        <div class="result-title">Data Input Terakhir:</div>
+        <ul class="result-list" id="inputResult"></ul>
       </div>
-
-      <div class="input-group">
-        <div class="input-label-row">
-          <label for="Stress_Level">Tingkat Stres (1-10):</label>
-          <span id="stressLevelValue" class="slider-value">5</span>
-        </div>
-        <div class="slider-wrap">
-          <input type="range" id="Stress_Level" min="1" max="10" value="5" aria-valuenow="5" aria-label="Tingkat Stres">
-        </div>
+      <div class="result-group">
+        <div class="result-title">Prediksi & Insight:</div>
+        <ul class="result-list" id="aiResult">
+          <li>Menghitung prediksi dan insight...</li>
+        </ul>
       </div>
-
-      <div class="input-group">
-        <label for="Heart_Rate">Detak Jantung (BPM):</label>
-        <input class="input-box" type="number" id="Heart_Rate" min="40" max="200" required placeholder="cth: 70" aria-label="Detak Jantung">
-      </div>
-
-      <div class="input-group">
-        <label for="Daily_Steps">Langkah Harian:</label>
-        <input class="input-box" type="number" id="Daily_Steps" min="0" max="30000" required placeholder="cth: 8000" aria-label="Langkah Harian">
-      </div>
-
-      <div class="alert" id="inputMsg"></div>
-      <div class="loader" id="loader">⏳ Menyimpan data, mohon tunggu...</div>
-      <button class="button-main" type="submit">Kirim &amp; Analisis</button>
-      <button class="button-outline" type="button" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
-    </form>
+      <button class="button-main" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+      <button class="button-outline" onclick="window.location.href='riwayat.html'">Lihat Riwayat</button>
+    </div>
+    <div class="alert" id="errMsg"></div>
+    <div class="loader" id="loader">⏳ Memuat hasil prediksi...</div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Setup Supabase
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    let userProfile = {};
-    let userId = null;
-
-    async function fillProfile() {
+    async function checkSession() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
+        sessionStorage.clear();
         window.location.href = "login-user.html";
-        return;
+        return false;
       }
-      userId = user.id;
-      sessionStorage.setItem("user_id", userId);
-
-      userProfile = user.user_metadata || {};
-      // Profile grid
-      document.getElementById("userProfile").innerHTML = `
-        <div class="profile-label">Nama:</div><div class="profile-value">${userProfile.name || '-'}</div>
-        <div class="profile-label">Gender:</div><div class="profile-value">${userProfile.gender || '-'}</div>
-        <div class="profile-label">Umur:</div><div class="profile-value">${userProfile.age || '-'}</div>
-        <div class="profile-label">Pekerjaan:</div><div class="profile-value">${userProfile.occupation || '-'}</div>
-        <div class="profile-label">BMI:</div><div class="profile-value">${userProfile.bmi_category || '-'}</div>
-      `;
+      return true;
     }
-    fillProfile();
 
-    // Slider display UX
-    const activitySlider = document.getElementById("Physical_Activity_Level");
-    const stressSlider = document.getElementById("Stress_Level");
-    activitySlider.oninput = function() {
-      document.getElementById("physicalActivityValue").innerText = this.value;
-      this.setAttribute('aria-valuenow', this.value);
-    };
-    stressSlider.oninput = function() {
-      document.getElementById("stressLevelValue").innerText = this.value;
-      this.setAttribute('aria-valuenow', this.value);
-    };
-
-    // Show/hide alert
-    function showAlert(msg, isError=true) {
-      const el = document.getElementById("inputMsg");
-      el.style.display = 'block';
-      el.style.color = isError ? '#e11d48' : '#16a34a';
-      el.style.background = isError ? '#fff1f2' : '#f0fff4';
-      el.style.borderColor = isError ? '#ffe4e6' : '#bbf7d0';
-      el.innerText = msg;
+    function showError(msg) {
+      document.getElementById('errMsg').style.display = 'block';
+      document.getElementById('errMsg').innerText = msg;
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'none';
     }
-    function hideAlert() { document.getElementById("inputMsg").style.display = 'none'; }
 
-    // Loader
     function showLoader(msg) {
-      document.getElementById("loader").innerText = msg || '⏳ Menyimpan data, mohon tunggu...';
-      document.getElementById("loader").style.display = 'block';
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('loader').innerText = msg || '⏳ Memuat hasil prediksi...';
+      document.getElementById('errMsg').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'none';
     }
+
     function hideLoader() {
-      document.getElementById("loader").style.display = 'none';
+      document.getElementById('loader').style.display = 'none';
     }
 
-    // Submit handler
-    document.getElementById("sleepForm").onsubmit = async function(e) {
-      e.preventDefault();
-      hideAlert();
+    function showMainContent() {
+      document.getElementById('errMsg').style.display = 'none';
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'flex';
+    }
+
+    async function renderResult() {
       showLoader();
+      // Cek login
+      if (!await checkSession()) return;
 
-      const activity = parseInt(activitySlider.value);
-      const stress = parseInt(stressSlider.value);
-      const heart = parseInt(document.getElementById("Heart_Rate").value);
-      const steps = parseInt(document.getElementById("Daily_Steps").value);
-
-      // Validasi
-      if (isNaN(heart) || heart < 40 || heart > 200) {
-        hideLoader();
-        showAlert("Detak jantung harus antara 40–200 BPM.");
+      // Ambil data input terakhir dari sessionStorage
+      const inputDataRaw = sessionStorage.getItem('sleep_input');
+      if (!inputDataRaw) {
+        showError("Data input tidak ditemukan atau sudah expired. Silakan input data tidur lagi.");
+        setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
         return;
       }
-      if (isNaN(steps) || steps < 0 || steps > 30000) {
-        hideLoader();
-        showAlert("Langkah harian harus antara 0–30000.");
-        return;
-      }
-
+      let inputData;
       try {
-        const { data: insertData, error } = await supabase.from("sleep_data").insert([{
-          user_id: userId,
-          physical_activity_level: activity,
-          stress_level: stress,
-          heart_rate: heart,
-          daily_steps: steps,
-          created_at: new Date()
-        }]).select("id").single();
-        if (error) throw error;
-        sessionStorage.setItem("sleep_input", JSON.stringify({
-          gender: userProfile.gender,
-          age: userProfile.age,
-          occupation: userProfile.occupation,
-          bmi_category: userProfile.bmi_category,
-          Physical_Activity_Level: activity,
-          Stress_Level: stress,
-          Heart_Rate: heart,
-          Daily_Steps: steps,
-          sleep_data_id: insertData.id
-        }));
-        hideLoader();
-        showAlert("Data berhasil disimpan!", false);
-        setTimeout(()=>{window.location.href = "hasil-prediksi.html";}, 800);
-      } catch (err) {
-        hideLoader();
-        showAlert("Gagal input data: " + (err.message || err));
+        inputData = JSON.parse(inputDataRaw);
+      } catch {
+        showError("Data input rusak. Silakan input ulang.");
+        setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
+        return;
       }
-    };
+      // Tampilkan profil user
+      document.getElementById("profileBox").innerHTML = `
+        <div class="profile-label">Nama:</div><div class="profile-value">${inputData.name || '-'}</div>
+        <div class="profile-label">Gender:</div><div class="profile-value">${inputData.gender || '-'}</div>
+        <div class="profile-label">Umur:</div><div class="profile-value">${inputData.age || '-'}</div>
+        <div class="profile-label">Pekerjaan:</div><div class="profile-value">${inputData.occupation || '-'}</div>
+        <div class="profile-label">BMI:</div><div class="profile-value">${inputData.bmi_category || '-'}</div>
+      `;
+      // Data input terakhir
+      document.getElementById("inputResult").innerHTML = `
+        <li>Aktivitas Fisik: <b>${inputData.Physical_Activity_Level}</b> / 100</li>
+        <li>Tingkat Stres: <b>${inputData.Stress_Level}</b> / 10</li>
+        <li>Detak Jantung: <b>${inputData.Heart_Rate}</b> BPM</li>
+        <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
+      `;
+
+      // Simulasi prediksi/AI insight (ganti dengan logika ML model jika ada)
+      let sleepQuality = "Normal";
+      let disorder = "-";
+      let advice = [];
+
+      // RULE SIMPLE: makin tinggi aktivitas & rendah stres, makin bagus
+      if (inputData.Stress_Level > 7) {
+        sleepQuality = "Kurang";
+        disorder = "Risiko insomnia atau kualitas tidur rendah";
+        advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
+      }
+      if (inputData.Physical_Activity_Level < 25) {
+        sleepQuality = "Kurang";
+        disorder = "Kurang olahraga";
+        advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
+      }
+      if (inputData.Heart_Rate > 100) {
+        advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
+      }
+      if (inputData.Daily_Steps < 3000) {
+        advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
+      }
+      if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
+        advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
+      }
+
+      document.getElementById("aiResult").innerHTML = `
+        <li>Kualitas Tidur: <b>${sleepQuality}</b></li>
+        <li>Gangguan Tidur: <b>${disorder}</b></li>
+        ${advice.length > 0 ? `<li>Saran: <ul style="margin:0;padding-left:1.2em;">${advice.map(s=>`<li>${s}</li>`).join("")}</ul></li>` : ""}
+      `;
+      showMainContent();
+    }
+
+    renderResult();
   </script>
 </body>
 </html>
