@@ -182,114 +182,116 @@
     <div class="loader" id="loader">⏳ Memuat hasil prediksi...</div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+<!-- ... [HTML dan CSS tetap, tidak perlu diubah] ... -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    async function checkSession() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        sessionStorage.clear();
-        window.location.href = "login-user.html";
-        return false;
-      }
-      return true;
+  async function checkSession() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      sessionStorage.clear();
+      window.location.href = "login-user.html";
+      return false;
+    }
+    return true;
+  }
+
+  function showError(msg) {
+    document.getElementById('errMsg').style.display = 'block';
+    document.getElementById('errMsg').innerText = msg;
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'none';
+  }
+
+  function showLoader(msg) {
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('loader').innerText = msg || '⏳ Memuat hasil prediksi...';
+    document.getElementById('errMsg').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'none';
+  }
+
+  function showMainContent() {
+    document.getElementById('errMsg').style.display = 'none';
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'flex';
+  }
+
+  async function renderResult() {
+    showLoader();
+    if (!await checkSession()) return;
+
+    const inputDataRaw = sessionStorage.getItem('sleep_input');
+    if (!inputDataRaw) {
+      showError("Data input tidak ditemukan atau sudah expired. Silakan input data tidur lagi.");
+      setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
+      return;
+    }
+    let inputData;
+    try {
+      inputData = JSON.parse(inputDataRaw);
+    } catch {
+      showError("Data input rusak. Silakan input ulang.");
+      setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
+      return;
     }
 
-    function showError(msg) {
-      document.getElementById('errMsg').style.display = 'block';
-      document.getElementById('errMsg').innerText = msg;
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'none';
+    // Profil user
+    document.getElementById("profileBox").innerHTML = `
+      <div class="profile-label">Nama:</div><div class="profile-value">${inputData.name || '-'}</div>
+      <div class="profile-label">Gender:</div><div class="profile-value">${inputData.gender || '-'}</div>
+      <div class="profile-label">Umur:</div><div class="profile-value">${inputData.age || '-'}</div>
+      <div class="profile-label">Pekerjaan:</div><div class="profile-value">${inputData.occupation || '-'}</div>
+      <div class="profile-label">BMI:</div><div class="profile-value">${inputData.bmi_category || '-'}</div>
+    `;
+    // Data input terakhir
+    document.getElementById("inputResult").innerHTML = `
+      <li>Aktivitas Fisik: <b>${inputData.Physical_Activity_Level}</b> / 100</li>
+      <li>Tingkat Stres: <b>${inputData.Stress_Level}</b> / 10</li>
+      <li>Detak Jantung: <b>${inputData.Heart_Rate}</b> BPM</li>
+      <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
+    `;
+
+    // --- RULE SIMPLE PREDIKSI ---
+    let sleepQuality = "Normal";
+    let disorder = "-";
+    let advice = [];
+    let sleepDuration = 7; // Default 7 jam, boleh diganti sesuai logika prediksi
+
+    if (inputData.Stress_Level > 7) {
+      sleepQuality = "Kurang";
+      disorder = "Risiko insomnia atau kualitas tidur rendah";
+      advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
+      sleepDuration = 5.5;
+    }
+    if (inputData.Physical_Activity_Level < 25) {
+      sleepQuality = "Kurang";
+      disorder = "Kurang olahraga";
+      advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
+      sleepDuration = 6;
+    }
+    if (inputData.Heart_Rate > 100) {
+      advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
+    }
+    if (inputData.Daily_Steps < 3000) {
+      advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
+      sleepDuration -= 0.5;
+    }
+    if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
+      advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
+      sleepDuration = 7.5;
     }
 
-    function showLoader(msg) {
-      document.getElementById('loader').style.display = 'block';
-      document.getElementById('loader').innerText = msg || '⏳ Memuat hasil prediksi...';
-      document.getElementById('errMsg').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'none';
-    }
+    // Tampilkan hasil prediksi ke user
+    document.getElementById("aiResult").innerHTML = `
+      <li>Kualitas Tidur: <b>${sleepQuality}</b></li>
+      <li>Gangguan Tidur: <b>${disorder}</b></li>
+      ${advice.length > 0 ? `<li>Saran: <ul style="margin:0;padding-left:1.2em;">${advice.map(s=>`<li>${s}</li>`).join("")}</ul></li>` : ""}
+    `;
 
-    function hideLoader() {
-      document.getElementById('loader').style.display = 'none';
-    }
-
-    function showMainContent() {
-      document.getElementById('errMsg').style.display = 'none';
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'flex';
-    }
-
-    async function renderResult() {
-      showLoader();
-      // Cek login
-      if (!await checkSession()) return;
-
-      // Ambil data input terakhir dari sessionStorage
-      const inputDataRaw = sessionStorage.getItem('sleep_input');
-      if (!inputDataRaw) {
-        showError("Data input tidak ditemukan atau sudah expired. Silakan input data tidur lagi.");
-        setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
-        return;
-      }
-      let inputData;
-      try {
-        inputData = JSON.parse(inputDataRaw);
-      } catch {
-        showError("Data input rusak. Silakan input ulang.");
-        setTimeout(()=>{window.location.href = "form-input.html";}, 2000);
-        return;
-      }
-      // Tampilkan profil user
-      document.getElementById("profileBox").innerHTML = `
-        <div class="profile-label">Nama:</div><div class="profile-value">${inputData.name || '-'}</div>
-        <div class="profile-label">Gender:</div><div class="profile-value">${inputData.gender || '-'}</div>
-        <div class="profile-label">Umur:</div><div class="profile-value">${inputData.age || '-'}</div>
-        <div class="profile-label">Pekerjaan:</div><div class="profile-value">${inputData.occupation || '-'}</div>
-        <div class="profile-label">BMI:</div><div class="profile-value">${inputData.bmi_category || '-'}</div>
-      `;
-      // Data input terakhir
-      document.getElementById("inputResult").innerHTML = `
-        <li>Aktivitas Fisik: <b>${inputData.Physical_Activity_Level}</b> / 100</li>
-        <li>Tingkat Stres: <b>${inputData.Stress_Level}</b> / 10</li>
-        <li>Detak Jantung: <b>${inputData.Heart_Rate}</b> BPM</li>
-        <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
-      `;
-
-      // Simulasi prediksi/AI insight (ganti dengan logika ML model jika ada)
-      let sleepQuality = "Normal";
-      let disorder = "-";
-      let advice = [];
-
-      // RULE SIMPLE: makin tinggi aktivitas & rendah stres, makin bagus
-      if (inputData.Stress_Level > 7) {
-        sleepQuality = "Kurang";
-        disorder = "Risiko insomnia atau kualitas tidur rendah";
-        advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
-      }
-      if (inputData.Physical_Activity_Level < 25) {
-        sleepQuality = "Kurang";
-        disorder = "Kurang olahraga";
-        advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
-      }
-      if (inputData.Heart_Rate > 100) {
-        advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
-      }
-      if (inputData.Daily_Steps < 3000) {
-        advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
-      }
-      if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
-        advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
-      }
-
-      document.getElementById("aiResult").innerHTML = `
-        <li>Kualitas Tidur: <b>${sleepQuality}</b></li>
-        <li>Gangguan Tidur: <b>${disorder}</b></li>
-        ${advice.length > 0 ? `<li>Saran: <ul style="margin:0;padding-left:1.2em;">${advice.map(s=>`<li>${s}</li>`).join("")}</ul></li>` : ""}
-      `;
-       // --- UPDATE DATA DI SUPABASE DENGAN HASIL PREDIKSI ---
+    // --- UPDATE DATA DI SUPABASE DENGAN HASIL PREDIKSI ---
     try {
       // Update record berdasarkan ID yang baru diinput (dari form)
       await supabase.from('sleep_data')
@@ -304,10 +306,12 @@
       // Jika gagal update, tampilkan peringatan saja tapi jangan hentikan flow
       document.getElementById("aiResult").innerHTML += `<li style="color:#e11d48;">Gagal simpan hasil prediksi ke database: ${err.message || err}</li>`;
     }
-      showMainContent();
-    }
 
-    renderResult();
-  </script>
+    showMainContent();
+  }
+
+  renderResult();
+</script>
+
 </body>
 </html>
