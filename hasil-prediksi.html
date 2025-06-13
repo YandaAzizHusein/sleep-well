@@ -302,7 +302,8 @@
           sleep_duration: sleepDuration,
           sleep_disorder: disorder
         })
-        .eq('id', inputData.sleep_data_id);
+        .eq('id', Number(inputData.sleep_data_id));
+      console.log('sleep_data_id di session:', inputData.sleep_data_id, typeof inputData.sleep_data_id);
     } catch (err) {
       document.getElementById("aiResult").innerHTML += `<li style="color:#e11d48;">Gagal simpan hasil prediksi ke database: ${err.message || err}</li>`;
     }
