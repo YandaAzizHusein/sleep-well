@@ -4,289 +4,444 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SleepWell AI – Prediksi & Edukasi Kesehatan Tidur Anda</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="icon" href="https://img.icons8.com/?size=512&id=J3mKYvU0AdkT&format=png" />
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .faq-toggle { transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+    :root {
+      --primary: #6751ef;
+      --secondary: #4eadeb;
+      --background: #f6f8fc;
+      --foreground: #fff;
+      --text: #2d2e32;
+      --accent: #6ee7b7;
+      --blue: #2563eb;
+      --purple: #a21caf;
+      --shadow: 0 4px 32px 0 rgba(66, 71, 112, 0.08);
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .flex { display: flex; align-items: center; }
+    .grid { display: grid; gap: 2rem; }
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.2rem;
+      border-radius: 1.5rem;
+      font-weight: 600;
+      font-size: 1.05rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: var(--blue); transform: translateY(-2px) scale(1.03); }
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      margin-left: 1rem;
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* Navbar */
+    nav {
+      background: #fff;
+      position: fixed;
+      width: 100%;
+      z-index: 50;
+      top: 0; left: 0;
+      box-shadow: var(--shadow);
+    }
+    .navbar { justify-content: space-between; height: 70px; }
+    .navbar-logo { font-weight: 800; font-size: 1.5rem; color: var(--primary);}
+    .navbar-links a {
+      margin-left: 1.8rem;
+      font-weight: 500;
+      color: #666;
+      transition: color .2s;
+      font-size: 1rem;
+    }
+    .navbar-links a.cta { color: #fff; background: var(--primary); padding: .5rem 1.2rem; border-radius: 1.2rem; margin-left: 2rem; }
+    .navbar-links a.cta:hover { background: var(--blue); }
+    .navbar-links a:hover { color: var(--primary);}
+    .navspacer { height: 70px; }
+
+    /* Hero */
+    .hero { min-height: 580px; padding: 2rem 0 4rem 0; gap: 3rem; }
+    .hero-text { flex: 1.3; }
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: .8rem;
+      line-height: 1.1;
+      text-shadow: 0 2px 12px rgba(103,81,239,0.09);
+    }
+    .hero-title span { color: var(--blue); }
+    .hero-sub { font-size: 1.2rem; color: #555; margin-bottom: 1.7rem; }
+    .hero-img { flex: 1; text-align: right;}
+    .hero-img img {
+      max-width: 380px; width: 90%; border-radius: 2rem; box-shadow: var(--shadow); background: #fff;
+    }
+    .hero-cta { margin-top: 2rem; }
+    .hero-trust {
+      color: var(--accent);
+      font-size: .98rem;
+      margin-top: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    /* Why/Keunggulan */
+    .why-section { padding: 4rem 0 1rem 0; }
+    .why-title { text-align: center; font-size: 2.2rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem;}
+    .why-grid { grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 1.7rem;}
+    .why-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: var(--shadow);
+      padding: 2rem 1.2rem 1.5rem 1.2rem;
+      text-align: center;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .why-card:hover { box-shadow: 0 8px 32px 0 rgba(103,81,239,0.11); transform: translateY(-4px);}
+    .why-card img { width: 58px; margin-bottom: .7rem;}
+    .why-card h3 { color: var(--blue); font-size: 1.1rem; font-weight: 700; margin-bottom: .6rem;}
+    .why-card p { color: #555; font-size: .96rem;}
+
+    /* Fitur */
+    .fitur-section { padding: 4rem 0 2rem 0;}
+    .fitur-title { text-align: center; font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem;}
+    .fitur-grid { grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1.7rem;}
+    .fitur-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: var(--shadow);
+      padding: 2.2rem 1.3rem 1.7rem 1.3rem;
+      text-align: center;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .fitur-card:hover { box-shadow: 0 8px 32px 0 rgba(103,81,239,0.14); transform: translateY(-4px);}
+    .fitur-card img { width: 62px; margin-bottom: .9rem;}
+    .fitur-card h3 { color: var(--primary); font-size: 1.09rem; font-weight: 700; margin-bottom: .7rem;}
+    .fitur-card p { color: #444; font-size: .97rem;}
+
+    /* Statistik/About */
+    .about-section { background: #fff; margin: 4rem 0 0 0; padding: 3.2rem 2rem; border-radius: 2rem; box-shadow: var(--shadow);}
+    .about-title { font-size: 2rem; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: .7rem;}
+    .about-desc { color: #444; font-size: 1.15rem; text-align: center; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;}
+    .stats-row { display: flex; flex-wrap: wrap; gap: 3rem; justify-content: center; margin-top: 1.5rem;}
+    .stat-card { text-align: center;}
+    .stat-card h3 { font-size: 1.7rem; font-weight: 800; color: var(--blue);}
+    .stat-card p { color: #666; font-size: 1.01rem;}
+
+    /* FAQ */
+    .faq-section { max-width: 900px; margin: 0 auto; padding: 3.7rem 0; }
+    .faq-title { text-align: center; font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem;}
+    .faq-item {
+      background: #fff;
+      border-radius: 1.1rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.2rem;
+      padding: 1.3rem 1.1rem;
+      cursor: pointer;
+      transition: box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .faq-item.open { box-shadow: 0 8px 32px 0 rgba(103,81,239,0.12);}
+    .faq-q {
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 1.07rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      color: #444;
+      font-size: .99rem;
+      margin-top: .7rem;
+      transition: max-height 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    /* Testimoni */
+    .testi-section { max-width: 900px; margin: 0 auto; padding: 4rem 0;}
+    .testi-title { text-align: center; font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem;}
+    .testi-box {
+      background: #fff;
+      border-radius: 2rem;
+      box-shadow: var(--shadow);
+      padding: 2.2rem 2rem 1.8rem 2rem;
+      text-align: center;
+      min-height: 200px;
+      position: relative;
+    }
+    .testi-img { width: 58px; height: 58px; border-radius: 50%; box-shadow: 0 2px 16px 0 rgba(66,71,112,.11); margin-bottom: 1rem;}
+    .testi-quote { font-style: italic; color: #555; margin-bottom: .9rem;}
+    .testi-name { color: var(--blue); font-weight: 700;}
+    .testi-arrows { position: absolute; top: 50%; left: 0; right: 0; display: flex; justify-content: space-between; width: 100%; pointer-events: none;}
+    .testi-arrow { pointer-events: all; background: #f6f8fc; border-radius: 50%; padding: .6rem; border: none; box-shadow: 0 2px 8px 0 rgba(66,71,112,.08); cursor: pointer; transition: background .2s;}
+    .testi-arrow:hover { background: var(--accent);}
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 2rem;
+      margin: 3rem auto 2rem auto;
+      box-shadow: var(--shadow);
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .cta-title { font-size: 1.6rem; font-weight: 700; margin-bottom: .7rem;}
+    .cta-btn { background: #fff; color: var(--primary); border-radius: 1.2rem; padding: 1rem 2.7rem; font-weight: 700; font-size: 1.1rem; margin-top: 1.5rem;}
+    .cta-btn:hover { background: var(--blue); color: #fff;}
+    
+    /* Footer */
+    footer { background: #fff; text-align: center; color: #888; padding: 2.5rem 0 .8rem 0; font-size: .97rem; border-top: 1px solid #e5e7eb;}
+    .footer-row { display: flex; justify-content: center; gap: 2.3rem; flex-wrap: wrap; align-items: center; margin-bottom: .7rem;}
+    .footer-logo { width: 36px; border-radius: .8rem; }
+    .footer-link { color: var(--blue); font-weight: 600; margin: 0 .8rem;}
+    .footer-link:hover { text-decoration: underline;}
+    .footer-partner { margin: 1rem 0; }
+    .footer-partner img { width: 30px; height: 30px; margin: 0 .4rem; vertical-align: middle;}
+    .footer-copy { font-size: .9rem; color: #bbb; margin-top: .5rem;}
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; text-align: center; gap: 1.3rem;}
+      .hero-img { text-align: center; margin-bottom: 1.5rem;}
+      .why-grid, .fitur-grid { grid-template-columns: 1fr 1fr;}
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1rem;}
+      .hero-title { font-size: 2rem;}
+      .about-section { padding: 2rem 1rem;}
+      .cta-section { padding: 1.3rem .7rem;}
+      .why-grid, .fitur-grid { grid-template-columns: 1fr;}
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-purple-100 min-h-screen text-gray-800">
+<body>
 
 <!-- Navbar -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-md px-6 py-3 flex items-center justify-between">
-  <div class="flex items-center gap-3">
-    <img src="https://img.icons8.com/?size=512&id=J3mKYvU0AdkT&format=png" alt="SleepWell Logo" class="w-9 h-9 rounded-xl" />
-    <span class="font-extrabold text-2xl text-purple-700 tracking-wide">SleepWell <span class="text-blue-500">AI</span></span>
-  </div>
-  <div class="hidden md:flex items-center gap-8 font-medium">
-    <a href="#features" class="hover:text-purple-700">Fitur</a>
-    <a href="#why" class="hover:text-purple-700">Keunggulan</a>
-    <a href="#about" class="hover:text-purple-700">Tentang</a>
-    <a href="#faq" class="hover:text-purple-700">FAQ</a>
-    <a href="#testimoni" class="hover:text-purple-700">Testimoni</a>
-    <a href="#contact" class="hover:text-purple-700">Kontak</a>
-    <a href="login.html" class="ml-3 px-5 py-2 bg-purple-600 text-white rounded-xl shadow hover:bg-purple-700 transition font-semibold">Masuk</a>
-    <a href="signup.html" class="ml-1 px-5 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition font-semibold">Coba Gratis</a>
-  </div>
-  <!-- Hamburger for mobile -->
-  <div class="md:hidden">
-    <button id="menu-btn" class="focus:outline-none">
-      <svg class="w-7 h-7 text-purple-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
+<nav>
+  <div class="container flex navbar">
+    <div class="flex" style="gap:.7rem">
+      <img src="https://img.icons8.com/?size=512&id=J3mKYvU0AdkT&format=png" style="width:38px;border-radius:.6rem;" alt="logo"/>
+      <span class="navbar-logo">SleepWell <span style="color:var(--blue)">AI</span></span>
+    </div>
+    <div class="navbar-links">
+      <a href="#features">Fitur</a>
+      <a href="#why">Keunggulan</a>
+      <a href="#about">Tentang</a>
+      <a href="#faq">FAQ</a>
+      <a href="#testi">Testimoni</a>
+      <a href="#contact">Kontak</a>
+      <a href="login.html" class="cta">Masuk</a>
+      <a href="signup.html" class="cta" style="background:var(--blue);margin-left:.8rem;">Coba Gratis</a>
+    </div>
   </div>
 </nav>
-<!-- Mobile Menu -->
-<div id="mobile-menu" class="fixed top-0 right-0 w-72 h-full bg-white shadow-2xl transform translate-x-full transition z-50 p-8 flex flex-col gap-7 font-semibold text-lg md:hidden">
-  <button id="close-menu" class="absolute top-5 right-6">
-    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-    </svg>
-  </button>
-  <a href="#features" class="hover:text-purple-700">Fitur</a>
-  <a href="#why" class="hover:text-purple-700">Keunggulan</a>
-  <a href="#about" class="hover:text-purple-700">Tentang</a>
-  <a href="#faq" class="hover:text-purple-700">FAQ</a>
-  <a href="#testimoni" class="hover:text-purple-700">Testimoni</a>
-  <a href="#contact" class="hover:text-purple-700">Kontak</a>
-  <a href="login.html" class="mt-5 px-5 py-2 bg-purple-600 text-white rounded-xl shadow">Masuk</a>
-  <a href="signup.html" class="mt-2 px-5 py-2 bg-blue-600 text-white rounded-xl shadow">Coba Gratis</a>
-</div>
-<script>
-  document.getElementById('menu-btn').onclick = () => document.getElementById('mobile-menu').style.transform = 'translateX(0)';
-  document.getElementById('close-menu').onclick = () => document.getElementById('mobile-menu').style.transform = 'translateX(100%)';
-</script>
-<div class="h-[70px] md:h-[64px]"></div>
+<div class="navspacer"></div>
 
-<!-- Hero Section -->
-<section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-7 py-14 md:py-24 gap-14">
-  <div class="flex-1">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-5 text-purple-800 leading-tight drop-shadow">Bangun Hidup Lebih Sehat dengan <span class="text-blue-500">Tidur Berkualitas</span></h1>
-    <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-lg">SleepWell AI membantu Anda memahami dan meningkatkan kualitas tidur lewat prediksi berbasis AI, insight kesehatan, dan rekomendasi personal yang terpercaya.</p>
-    <div class="flex gap-5 mb-4 flex-wrap">
-      <a href="signup.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl font-bold text-lg shadow-xl transition">Coba Gratis</a>
-      <a href="#features" class="bg-white border border-blue-600 text-blue-700 px-7 py-3 rounded-2xl font-semibold hover:bg-blue-50 transition">Lihat Fitur</a>
+<!-- Hero -->
+<section class="container flex hero" style="margin-top:2.2rem;">
+  <div class="hero-text">
+    <div class="hero-title">Bangun Hidup Lebih Sehat<br>dengan <span>Tidur Berkualitas</span></div>
+    <div class="hero-sub">SleepWell AI membantu Anda memahami dan meningkatkan kualitas tidur lewat prediksi AI, insight kesehatan, dan solusi personal terpercaya.</div>
+    <div class="hero-cta">
+      <a href="signup.html" class="btn">Coba Gratis</a>
+      <a href="#features" class="btn btn-outline">Lihat Fitur</a>
     </div>
-    <div class="flex items-center gap-2 text-green-700 mt-3 text-sm">
-      <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-      <span>Privasi terjaga & 100% gratis selamanya</span>
-    </div>
+    <div class="hero-trust"><span>✔️</span>Privasi terjaga & 100% gratis selamanya</div>
   </div>
-  <div class="flex-1 flex justify-center">
-    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=cover&w=500&q=80" alt="Tidur Sehat" class="w-[390px] h-[350px] md:w-[430px] md:h-[390px] rounded-2xl shadow-2xl object-cover"/>
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=cover&w=500&q=80" alt="Tidur Sehat" />
   </div>
 </section>
 
-<!-- Why SleepWell Section -->
-<section id="why" class="max-w-6xl mx-auto px-8 py-10">
-  <h2 class="text-3xl font-bold text-center text-purple-800 mb-10">Kenapa Memilih SleepWell AI?</h2>
-  <div class="grid md:grid-cols-4 gap-8 text-center">
-    <div class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/sleeping.png" class="w-14 h-14 mb-3" />
-      <h3 class="font-bold text-blue-700 mb-2">Akurat & Personal</h3>
-      <p class="text-gray-600 text-sm">Prediksi & rekomendasi berbasis AI, menyesuaikan kebutuhan tidur Anda secara personal.</p>
+<!-- Why SleepWell -->
+<section class="container why-section" id="why">
+  <div class="why-title">Kenapa Memilih SleepWell AI?</div>
+  <div class="grid why-grid">
+    <div class="why-card">
+      <img src="https://img.icons8.com/color/96/sleeping.png"/>
+      <h3>Akurat & Personal</h3>
+      <p>Prediksi & rekomendasi berbasis AI yang menyesuaikan kebutuhan tidur Anda.</p>
     </div>
-    <div class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/statistics.png" class="w-14 h-14 mb-3" />
-      <h3 class="font-bold text-blue-700 mb-2">Visualisasi Interaktif</h3>
-      <p class="text-gray-600 text-sm">Progress tidur disajikan dengan grafik interaktif yang mudah dimengerti.</p>
+    <div class="why-card">
+      <img src="https://img.icons8.com/color/96/statistics.png"/>
+      <h3>Visualisasi Interaktif</h3>
+      <p>Progress tidur disajikan dengan grafik interaktif yang mudah dimengerti.</p>
     </div>
-    <div class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/security-checked.png" class="w-14 h-14 mb-3" />
-      <h3 class="font-bold text-blue-700 mb-2">Privasi Aman</h3>
-      <p class="text-gray-600 text-sm">Data Anda terenkripsi dan hanya Anda yang bisa akses. Tidak pernah dijual ke pihak ketiga.</p>
+    <div class="why-card">
+      <img src="https://img.icons8.com/color/96/security-checked.png"/>
+      <h3>Privasi Aman</h3>
+      <p>Data Anda terenkripsi dan tidak pernah dijual ke pihak ketiga.</p>
     </div>
-    <div class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition flex flex-col items-center">
-      <img src="https://img.icons8.com/color/96/idea.png" class="w-14 h-14 mb-3" />
-      <h3 class="font-bold text-blue-700 mb-2">Solusi Komprehensif</h3>
-      <p class="text-gray-600 text-sm">Saran CBT-I, sleep hygiene, dan edukasi pola hidup sehat — bukan sekadar prediksi angka.</p>
+    <div class="why-card">
+      <img src="https://img.icons8.com/color/96/idea.png"/>
+      <h3>Solusi Komprehensif</h3>
+      <p>Rekomendasi CBT-I, sleep hygiene, & edukasi pola hidup sehat.</p>
     </div>
   </div>
 </section>
 
 <!-- Fitur Section -->
-<section id="features" class="max-w-6xl mx-auto px-8 py-12">
-  <h2 class="text-3xl font-bold text-center text-purple-800 mb-10">Fitur SleepWell AI</h2>
-  <div class="grid md:grid-cols-3 gap-8">
-    <div class="bg-white rounded-2xl p-7 shadow-xl hover:shadow-2xl transition flex flex-col items-center text-center">
-      <img src="https://img.icons8.com/color/96/smart-watch.png" class="w-14 h-14 mb-4" />
-      <h3 class="text-lg font-bold text-blue-700 mb-2">Analisis Tidur Otomatis</h3>
-      <p class="text-gray-600">Input data harian, SleepWell otomatis menganalisis durasi, kualitas, & gangguan tidur Anda.</p>
+<section class="container fitur-section" id="features">
+  <div class="fitur-title">Fitur SleepWell AI</div>
+  <div class="grid fitur-grid">
+    <div class="fitur-card">
+      <img src="https://img.icons8.com/color/96/smart-watch.png"/>
+      <h3>Analisis Tidur Otomatis</h3>
+      <p>Input data harian, SleepWell otomatis menganalisis durasi, kualitas, & gangguan tidur Anda.</p>
     </div>
-    <div class="bg-white rounded-2xl p-7 shadow-xl hover:shadow-2xl transition flex flex-col items-center text-center">
-      <img src="https://img.icons8.com/color/96/brain.png" class="w-14 h-14 mb-4" />
-      <h3 class="text-lg font-bold text-blue-700 mb-2">Rekomendasi Personal</h3>
-      <p class="text-gray-600">Saran CBT-I, pola tidur, olahraga, dan stress management khusus sesuai hasil analisis.</p>
+    <div class="fitur-card">
+      <img src="https://img.icons8.com/color/96/brain.png"/>
+      <h3>Rekomendasi Personal</h3>
+      <p>Saran CBT-I, pola tidur, olahraga, dan stress management khusus sesuai hasil analisis.</p>
     </div>
-    <div class="bg-white rounded-2xl p-7 shadow-xl hover:shadow-2xl transition flex flex-col items-center text-center">
-      <img src="https://img.icons8.com/color/96/statistics.png" class="w-14 h-14 mb-4" />
-      <h3 class="text-lg font-bold text-blue-700 mb-2">Visualisasi & Progress</h3>
-      <p class="text-gray-600">Riwayat dan tren tidur divisualisasikan dengan grafik menarik, mudah dipahami semua usia.</p>
+    <div class="fitur-card">
+      <img src="https://img.icons8.com/color/96/statistics.png"/>
+      <h3>Visualisasi & Progress</h3>
+      <p>Riwayat dan tren tidur divisualisasikan dengan grafik menarik, mudah dipahami semua usia.</p>
     </div>
   </div>
 </section>
 
-<!-- Statistik & About -->
-<section id="about" class="max-w-5xl mx-auto py-16 px-8 mt-5 bg-white rounded-3xl shadow-xl">
-  <div class="text-center mb-7">
-    <h2 class="text-3xl font-bold text-purple-800 mb-3">Tentang SleepWell AI</h2>
-    <p class="text-gray-700 max-w-2xl mx-auto text-lg mb-6">SleepWell AI dikembangkan oleh tim multidisiplin di bidang kesehatan, data, dan teknologi. Visi kami: menghadirkan kualitas tidur optimal, edukasi kesehatan, dan kebiasaan sehat untuk masyarakat Indonesia, berbasis data, privasi, dan personalisasi.</p>
+<!-- Statistik/About -->
+<section class="container about-section" id="about">
+  <div class="about-title">Tentang SleepWell AI</div>
+  <div class="about-desc">
+    SleepWell AI dikembangkan oleh tim multidisiplin di bidang kesehatan, data, dan teknologi.<br>
+    Visi kami: menghadirkan kualitas tidur optimal, edukasi kesehatan, dan kebiasaan sehat untuk masyarakat Indonesia.
   </div>
-  <div class="flex flex-wrap justify-center gap-8 mt-7">
-    <div>
-      <h3 class="text-2xl font-bold text-blue-600">13.000+</h3>
-      <p class="text-gray-600">Data tidur diproses</p>
-    </div>
-    <div>
-      <h3 class="text-2xl font-bold text-blue-600">4.9/5</h3>
-      <p class="text-gray-600">Rating pengguna</p>
-    </div>
-    <div>
-      <h3 class="text-2xl font-bold text-blue-600">#1</h3>
-      <p class="text-gray-600">Aplikasi prediksi tidur di Indonesia</p>
-    </div>
-    <div>
-      <h3 class="text-2xl font-bold text-blue-600">100%</h3>
-      <p class="text-gray-600">Data terenkripsi</p>
-    </div>
+  <div class="stats-row">
+    <div class="stat-card"><h3>13.000+</h3><p>Data tidur diproses</p></div>
+    <div class="stat-card"><h3>4.9/5</h3><p>Rating pengguna</p></div>
+    <div class="stat-card"><h3>#1</h3><p>Aplikasi prediksi tidur di Indonesia</p></div>
+    <div class="stat-card"><h3>100%</h3><p>Data terenkripsi</p></div>
   </div>
 </section>
 
 <!-- FAQ Section -->
-<section id="faq" class="max-w-5xl mx-auto px-8 py-16">
-  <h2 class="text-3xl font-bold text-center text-purple-800 mb-10">FAQ</h2>
-  <div class="space-y-5">
-    <div class="bg-white rounded-2xl shadow p-6 cursor-pointer group" onclick="toggleFaq(0)">
-      <div class="flex items-center justify-between">
-        <span class="font-semibold text-lg text-blue-700">Apakah SleepWell AI gratis?</span>
-        <svg class="w-6 h-6 text-blue-700 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-      </div>
-      <div class="faq-toggle max-h-0 overflow-hidden text-gray-600 text-base mt-3 transition-all">Ya, SleepWell AI gratis untuk semua pengguna, tanpa biaya tersembunyi.</div>
-    </div>
-    <div class="bg-white rounded-2xl shadow p-6 cursor-pointer group" onclick="toggleFaq(1)">
-      <div class="flex items-center justify-between">
-        <span class="font-semibold text-lg text-blue-700">Apakah data saya aman & rahasia?</span>
-        <svg class="w-6 h-6 text-blue-700 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-      </div>
-      <div class="faq-toggle max-h-0 overflow-hidden text-gray-600 text-base mt-3 transition-all">Tentu. Semua data Anda terenkripsi dan tidak pernah dibagikan ke pihak luar.</div>
-    </div>
-    <div class="bg-white rounded-2xl shadow p-6 cursor-pointer group" onclick="toggleFaq(2)">
-      <div class="flex items-center justify-between">
-        <span class="font-semibold text-lg text-blue-700">Bagaimana SleepWell AI memprediksi tidur?</span>
-        <svg class="w-6 h-6 text-blue-700 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-      </div>
-      <div class="faq-toggle max-h-0 overflow-hidden text-gray-600 text-base mt-3 transition-all">Kami menggunakan algoritma machine learning dari data aktivitas, stress, pola tidur, dan gaya hidup Anda untuk hasil prediksi akurat dan personal.</div>
-    </div>
-    <div class="bg-white rounded-2xl shadow p-6 cursor-pointer group" onclick="toggleFaq(3)">
-      <div class="flex items-center justify-between">
-        <span class="font-semibold text-lg text-blue-700">Apakah SleepWell bisa digunakan semua umur?</span>
-        <svg class="w-6 h-6 text-blue-700 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-      </div>
-      <div class="faq-toggle max-h-0 overflow-hidden text-gray-600 text-base mt-3 transition-all">Bisa. Cocok untuk remaja, dewasa, hingga lansia. Data rekomendasi akan menyesuaikan usia dan profil pengguna.</div>
-    </div>
+<section class="faq-section" id="faq">
+  <div class="faq-title">FAQ</div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Apakah SleepWell AI gratis? <span>▼</span></div>
+    <div class="faq-a">Ya, SleepWell AI gratis untuk semua pengguna, tanpa biaya tersembunyi.</div>
   </div>
-  <script>
-    const faqs = document.querySelectorAll('.faq-toggle');
-    function toggleFaq(i) {
-      faqs.forEach((faq, idx) => {
-        if (idx === i) {
-          faq.style.maxHeight = faq.style.maxHeight && faq.style.maxHeight !== '0px' ? null : faq.scrollHeight + 'px';
-        } else {
-          faq.style.maxHeight = null;
-        }
-      });
-    }
-    // Expand on load if hash is #faq
-    if (window.location.hash === '#faq') setTimeout(()=>toggleFaq(0), 700);
-  </script>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Apakah data saya aman & rahasia? <span>▼</span></div>
+    <div class="faq-a">Tentu. Semua data Anda terenkripsi dan tidak pernah dibagikan ke pihak luar.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Bagaimana SleepWell AI memprediksi tidur? <span>▼</span></div>
+    <div class="faq-a">Kami menggunakan algoritma machine learning dari data aktivitas, stress, pola tidur, dan gaya hidup Anda untuk hasil prediksi akurat dan personal.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Apakah SleepWell bisa digunakan semua umur? <span>▼</span></div>
+    <div class="faq-a">Bisa. Cocok untuk remaja, dewasa, hingga lansia. Data rekomendasi akan menyesuaikan usia dan profil pengguna.</div>
+  </div>
 </section>
+<script>
+function toggleFaq(el) {
+  document.querySelectorAll('.faq-item').forEach(i=>i!==el&&i.classList.remove('open'));
+  el.classList.toggle('open');
+}
+</script>
 
-<!-- Testimoni Carousel -->
-<section id="testimoni" class="max-w-5xl mx-auto px-8 py-16">
-  <h2 class="text-3xl font-bold text-center text-purple-800 mb-8">Apa Kata Pengguna?</h2>
-  <div id="carousel" class="relative bg-white rounded-3xl p-7 shadow-xl flex flex-col items-center min-h-[240px] transition-all duration-300">
-    <img id="user-img" src="https://randomuser.me/api/portraits/women/65.jpg" class="w-16 h-16 rounded-full mb-4 shadow"/>
-    <p id="user-quote" class="italic text-gray-700 mb-3 text-center max-w-xl">“SleepWell AI bener-bener bantu aku atur pola tidur! Sekarang bangun pagi lebih segar dan produktif.”</p>
-    <span id="user-name" class="font-semibold text-blue-700">— Nadia, Mahasiswi</span>
-    <!-- arrows -->
-    <button id="prev-testi" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-purple-50 hover:bg-purple-100 shadow"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
-    <button id="next-testi" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-purple-50 hover:bg-purple-100 shadow"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+<!-- Testimoni Section -->
+<section class="testi-section" id="testi">
+  <div class="testi-title">Apa Kata Pengguna?</div>
+  <div class="testi-box" id="testi-box">
+    <img class="testi-img" id="testi-img" src="https://randomuser.me/api/portraits/women/65.jpg"/>
+    <div class="testi-quote" id="testi-quote">“SleepWell AI bener-bener bantu aku atur pola tidur! Sekarang bangun pagi lebih segar dan produktif.”</div>
+    <div class="testi-name" id="testi-name">— Nadia, Mahasiswi</div>
+    <div class="testi-arrows">
+      <button class="testi-arrow" onclick="prevTesti(event)">&lt;</button>
+      <button class="testi-arrow" onclick="nextTesti(event)">&gt;</button>
+    </div>
   </div>
-  <script>
-    const testimonials = [
-      {
-        img: "https://randomuser.me/api/portraits/women/65.jpg",
-        quote: "“SleepWell AI bener-bener bantu aku atur pola tidur! Sekarang bangun pagi lebih segar dan produktif.”",
-        name: "— Nadia, Mahasiswi"
-      },
-      {
-        img: "https://randomuser.me/api/portraits/men/47.jpg",
-        quote: "“Analisis tidurnya detail, rekomendasinya mudah diterapkan. Data privasi juga terjaga!”",
-        name: "— Andi, Data Analyst"
-      },
-      {
-        img: "https://randomuser.me/api/portraits/men/9.jpg",
-        quote: "“Saya jadi sadar pentingnya sleep hygiene. Grafik riwayatnya keren dan mudah dimengerti.”",
-        name: "— Budi, Guru"
-      },
-      {
-        img: "https://randomuser.me/api/portraits/women/89.jpg",
-        quote: "“Tim support SleepWell AI cepat tanggap, dan desain aplikasinya user-friendly banget!”",
-        name: "— Siska, Ibu Rumah Tangga"
-      }
-    ];
-    let testiIdx = 0;
-    const userImg = document.getElementById('user-img');
-    const userQuote = document.getElementById('user-quote');
-    const userName = document.getElementById('user-name');
-    function updateTesti(idx) {
-      userImg.src = testimonials[idx].img;
-      userQuote.innerHTML = testimonials[idx].quote;
-      userName.innerHTML = testimonials[idx].name;
-    }
-    document.getElementById('prev-testi').onclick = () => { testiIdx = (testiIdx + testimonials.length - 1) % testimonials.length; updateTesti(testiIdx); };
-    document.getElementById('next-testi').onclick = () => { testiIdx = (testiIdx + 1) % testimonials.length; updateTesti(testiIdx); };
-    // Optional: auto rotate every 7 sec
-    setInterval(() => { testiIdx = (testiIdx + 1) % testimonials.length; updateTesti(testiIdx); }, 7000);
-  </script>
 </section>
+<script>
+const testimonials = [
+  {
+    img: "https://randomuser.me/api/portraits/women/65.jpg",
+    quote: "“SleepWell AI bener-bener bantu aku atur pola tidur! Sekarang bangun pagi lebih segar dan produktif.”",
+    name: "— Nadia, Mahasiswi"
+  },
+  {
+    img: "https://randomuser.me/api/portraits/men/47.jpg",
+    quote: "“Analisis tidurnya detail, rekomendasinya mudah diterapkan. Data privasi juga terjaga!”",
+    name: "— Andi, Data Analyst"
+  },
+  {
+    img: "https://randomuser.me/api/portraits/men/9.jpg",
+    quote: "“Saya jadi sadar pentingnya sleep hygiene. Grafik riwayatnya keren dan mudah dimengerti.”",
+    name: "— Budi, Guru"
+  },
+  {
+    img: "https://randomuser.me/api/portraits/women/89.jpg",
+    quote: "“Tim support SleepWell AI cepat tanggap, dan desain aplikasinya user-friendly banget!”",
+    name: "— Siska, Ibu Rumah Tangga"
+  }
+];
+let testiIdx = 0;
+function updateTesti(idx) {
+  document.getElementById('testi-img').src = testimonials[idx].img;
+  document.getElementById('testi-quote').innerHTML = testimonials[idx].quote;
+  document.getElementById('testi-name').innerHTML = testimonials[idx].name;
+}
+function prevTesti(e) { e.stopPropagation(); testiIdx = (testiIdx + testimonials.length - 1) % testimonials.length; updateTesti(testiIdx);}
+function nextTesti(e) { e.stopPropagation(); testiIdx = (testiIdx + 1) % testimonials.length; updateTesti(testiIdx);}
+setInterval(()=>{testiIdx=(testiIdx+1)%testimonials.length;updateTesti(testiIdx);},7000);
+</script>
 
 <!-- CTA Section -->
-<section class="max-w-4xl mx-auto py-12 px-8 flex flex-col md:flex-row items-center justify-between bg-gradient-to-tr from-blue-400 to-purple-400 rounded-3xl shadow-2xl mb-12 mt-8">
-  <div class="mb-6 md:mb-0">
-    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Saatnya Tidur Berkualitas, Hidup Lebih Bahagia.</h2>
-    <p class="text-lg text-white">Gabung bersama ribuan pengguna. Gratis, privasi terjamin, dan dukungan penuh SleepWell AI!</p>
-  </div>
-  <a href="signup.html" class="bg-white text-purple-700 px-10 py-4 rounded-xl font-bold text-lg shadow-xl hover:bg-purple-100 transition">Mulai Gratis Sekarang</a>
+<section class="cta-section">
+  <div class="cta-title">Saatnya Tidur Berkualitas, Hidup Lebih Bahagia.</div>
+  <div>Gabung bersama ribuan pengguna. Gratis, privasi terjamin, dan dukungan penuh SleepWell AI!</div>
+  <a href="signup.html" class="btn cta-btn">Mulai Gratis Sekarang</a>
 </section>
 
 <!-- Footer -->
-<footer id="contact" class="bg-white text-center text-gray-600 py-10 border-t shadow-inner">
-  <div class="flex flex-wrap justify-center items-center gap-5 mb-5">
-    <img src="https://img.icons8.com/?size=512&id=J3mKYvU0AdkT&format=png" class="w-9 h-9 rounded-xl" alt="SleepWell Logo"/>
-    <span class="font-bold text-purple-700 text-lg">SleepWell AI</span>
-    <span class="text-gray-400 hidden md:inline">|</span>
-    <a href="mailto:support@sleepwellai.id" class="text-blue-600 hover:underline">support@sleepwellai.id</a>
-    <span class="text-gray-400 hidden md:inline">|</span>
-    <a href="#" class="hover:underline">Kebijakan Privasi</a>
-    <span class="text-gray-400 hidden md:inline">|</span>
-    <a href="#" class="hover:underline">Instagram</a>
-    <a href="#" class="hover:underline">LinkedIn</a>
+<footer id="contact">
+  <div class="footer-row">
+    <img src="https://img.icons8.com/?size=512&id=J3mKYvU0AdkT&format=png" class="footer-logo" alt="SleepWell Logo"/>
+    <span class="navbar-logo" style="font-size:1.11rem">SleepWell <span style="color:var(--blue)">AI</span></span>
+    <a href="mailto:support@sleepwellai.id" class="footer-link">support@sleepwellai.id</a>
+    <a href="#" class="footer-link">Kebijakan Privasi</a>
+    <a href="#" class="footer-link">Instagram</a>
+    <a href="#" class="footer-link">LinkedIn</a>
   </div>
-  <div class="mb-3 text-xs text-gray-400">
-    <span>SleepWell AI &copy; 2025 &middot; Powered by DevAcademy.id &middot; All rights reserved.</span>
+  <div class="footer-partner">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Google-flutter-logo.svg" alt="Flutter"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Tailwind_CSS_Logo.svg" alt="TailwindCSS"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Supabase_logo.png" alt="Supabase"/>
   </div>
-  <div class="flex flex-wrap justify-center gap-5 mt-2">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Google-flutter-logo.svg" class="w-8 h-8" alt="Partner1"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Tailwind_CSS_Logo.svg" class="w-8 h-8" alt="Partner2"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Supabase_logo.png" class="w-14 h-8" alt="Partner3"/>
-    <!-- Add more logos if needed -->
-  </div>
+  <div class="footer-copy">SleepWell AI &copy; 2025 &middot; Powered by DevAcademy.id &middot; All rights reserved.</div>
 </footer>
 </body>
 </html>
