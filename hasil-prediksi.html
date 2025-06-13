@@ -254,35 +254,38 @@
       <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
     `;
 
-  // --- RULE SIMPLE PREDIKSI ---
-let sleepQuality = "Normal";
-let disorder = "-";
-let advice = [];
-let sleepDuration = 7; // <--- Tambahkan inisialisasi default di sini
+    // --- RULE SIMPLE PREDIKSI ---
+    let sleepQuality = "Normal";
+    let disorder = "-";
+    let advice = [];
+    let sleepDuration = 7; // PASTIKAN ADA DI SINI
 
-if (inputData.Stress_Level > 7) {
-  sleepQuality = "Kurang";
-  disorder = "Risiko insomnia atau kualitas tidur rendah";
-  advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
-  sleepDuration = 5.5;
-}
-if (inputData.Physical_Activity_Level < 25) {
-  sleepQuality = "Kurang";
-  disorder = "Kurang olahraga";
-  advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
-  sleepDuration = 6;
-}
-if (inputData.Heart_Rate > 100) {
-  advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
-}
-if (inputData.Daily_Steps < 3000) {
-  advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
-  sleepDuration -= 0.5;
-}
-if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
-  advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
-  sleepDuration = 7.5;
-}
+    if (inputData.Stress_Level > 7) {
+      sleepQuality = "Kurang";
+      disorder = "Risiko insomnia atau kualitas tidur rendah";
+      advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
+      sleepDuration = 5.5;
+    }
+    if (inputData.Physical_Activity_Level < 25) {
+      sleepQuality = "Kurang";
+      disorder = "Kurang olahraga";
+      advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
+      sleepDuration = 6;
+    }
+    if (inputData.Heart_Rate > 100) {
+      advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
+    }
+    if (inputData.Daily_Steps < 3000) {
+      advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
+      sleepDuration -= 0.5;
+    }
+    if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
+      advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
+      sleepDuration = 7.5;
+    }
+
+    // --- DEBUG: LOG SLEEP DURATION
+    console.log("sleepDuration =", sleepDuration);
 
     // Tampilkan hasil prediksi ke user
     document.getElementById("aiResult").innerHTML = `
@@ -293,7 +296,6 @@ if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physica
 
     // --- UPDATE DATA DI SUPABASE DENGAN HASIL PREDIKSI ---
     try {
-      // Update record berdasarkan ID yang baru diinput (dari form)
       await supabase.from('sleep_data')
         .update({
           quality_of_sleep: sleepQuality,
@@ -301,9 +303,7 @@ if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physica
           sleep_disorder: disorder
         })
         .eq('id', inputData.sleep_data_id);
-      // Optional: bisa tampilkan pesan sukses update ke user
     } catch (err) {
-      // Jika gagal update, tampilkan peringatan saja tapi jangan hentikan flow
       document.getElementById("aiResult").innerHTML += `<li style="color:#e11d48;">Gagal simpan hasil prediksi ke database: ${err.message || err}</li>`;
     }
 
