@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #f5f8fb;
+      background: linear-gradient(120deg, #303f9f 0%, #00bcd4 100%);
       font-family: 'Inter', Arial, sans-serif;
       min-height: 100vh;
       margin: 0;
@@ -16,81 +16,80 @@
       justify-content: center;
     }
     .main-container {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 3px 20px 0 rgba(30,50,90,0.08), 0 1.5px 5px #d9e4f5;
-      padding: 36px 32px 28px 32px;
+      background: rgba(255,255,255,0.97);
+      border-radius: 18px;
+      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
+      padding: 42px 32px 32px 32px;
       width: 100%;
-      max-width: 370px;
+      max-width: 380px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
+    }
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
     .main-container h2 {
-      font-size: 1.5rem;
       font-weight: 700;
-      color: #163561;
-      margin-bottom: 12px;
-      letter-spacing: 0;
+      font-size: 2rem;
+      color: #21243d;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
       text-align: center;
     }
     #userWelcome {
-      color: #2b758a;
-      font-size: 1.09rem;
-      font-weight: 500;
-      margin-bottom: 30px;
-      min-height: 28px;
+      color: #209ca9;
+      font-size: 1.07rem;
+      font-weight: 600;
+      margin-bottom: 26px;
+      min-height: 24px;
       text-align: center;
-      background: #f1fbff;
-      border-radius: 8px;
-      padding: 7px 0;
-      width: 100%;
-      box-sizing: border-box;
     }
     .btn-group {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-bottom: 10px;
+      gap: 18px;
+      margin-bottom: 2px;
     }
     .menu-btn {
       width: 100%;
-      padding: 12px 0;
+      padding: 14px 0;
       border: none;
       border-radius: 9px;
-      font-size: 1.07rem;
-      font-weight: 600;
+      font-size: 1.09rem;
+      font-weight: 700;
       color: #fff;
-      background: #2196f3;
-      box-shadow: 0 1.5px 8px #2196f31c;
-      letter-spacing: 0.01em;
+      background: linear-gradient(90deg, #1976d2 50%, #00bcd4 100%);
+      box-shadow: 0 2px 8px 0 rgba(0,188,212,0.12);
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: background 0.15s, box-shadow 0.13s, transform 0.11s;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.12s;
+      margin-bottom: 0;
       outline: none;
-      border-bottom: 2px solid #207ecc;
     }
     .menu-btn:hover, .menu-btn:focus {
-      background: #1565c0;
-      box-shadow: 0 3.5px 15px #207ecc22;
-      transform: translateY(-1px) scale(1.011);
+      background: linear-gradient(90deg, #00bcd4 20%, #1976d2 100%);
+      box-shadow: 0 6px 22px 0 rgba(0,188,212,0.13);
+      transform: translateY(-1.5px) scale(1.018);
     }
     .menu-btn.logout {
-      background: #e94e77;
-      border-bottom: 2px solid #b82553;
-      margin-top: 8px;
+      background: linear-gradient(90deg, #e57373 20%, #d32f2f 100%);
+      margin-top: 2px;
     }
     .menu-btn.logout:hover, .menu-btn.logout:focus {
-      background: #b82553;
-      box-shadow: 0 3.5px 15px #e94e7733;
+      background: linear-gradient(90deg, #d32f2f 20%, #e57373 100%);
+      box-shadow: 0 8px 24px #e5737322;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 480px) {
       .main-container {
-        padding: 18px 6vw 14px 6vw;
+        padding: 24px 5vw 18px 5vw;
         max-width: 97vw;
       }
       .main-container h2 {
-        font-size: 1.1rem;
+        font-size: 1.33rem;
       }
     }
   </style>
