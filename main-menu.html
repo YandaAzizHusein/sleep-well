@@ -4,125 +4,43 @@
   <meta charset="UTF-8">
   <title>Menu Utama SleepWell AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(120deg, #303f9f 0%, #00bcd4 100%);
-      font-family: 'Inter', Arial, sans-serif;
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .main-container {
-      background: rgba(255,255,255,0.97);
-      border-radius: 18px;
-      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
-      padding: 42px 32px 32px 32px;
-      width: 100%;
-      max-width: 380px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
-    }
-    @keyframes fadein {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    .main-container h2 {
-      font-weight: 700;
-      font-size: 2rem;
-      color: #21243d;
-      margin-bottom: 10px;
-      letter-spacing: -0.03em;
-      text-align: center;
-    }
-    #userWelcome {
-      color: #209ca9;
-      font-size: 1.07rem;
-      font-weight: 600;
-      margin-bottom: 26px;
-      min-height: 24px;
-      text-align: center;
-    }
-    .btn-group {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-bottom: 2px;
-    }
-    .menu-btn {
-      width: 100%;
-      padding: 14px 0;
-      border: none;
-      border-radius: 9px;
-      font-size: 1.09rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg, #1976d2 50%, #00bcd4 100%);
-      box-shadow: 0 2px 8px 0 rgba(0,188,212,0.12);
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.12s;
-      margin-bottom: 0;
-      outline: none;
-    }
-    .menu-btn:hover, .menu-btn:focus {
-      background: linear-gradient(90deg, #00bcd4 20%, #1976d2 100%);
-      box-shadow: 0 6px 22px 0 rgba(0,188,212,0.13);
-      transform: translateY(-1.5px) scale(1.018);
-    }
-    .menu-btn.logout {
-      background: linear-gradient(90deg, #e57373 20%, #d32f2f 100%);
-      margin-top: 2px;
-    }
-    .menu-btn.logout:hover, .menu-btn.logout:focus {
-      background: linear-gradient(90deg, #d32f2f 20%, #e57373 100%);
-      box-shadow: 0 8px 24px #e5737322;
-    }
-    @media (max-width: 480px) {
-      .main-container {
-        padding: 24px 5vw 18px 5vw;
-        max-width: 97vw;
-      }
-      .main-container h2 {
-        font-size: 1.33rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style/main-menu.css" />
 </head>
-<body>
+<body class="main-menu">
   <div class="main-container">
     <h2>Menu Utama SleepWell</h2>
     <div id="userWelcome">Memuat...</div>
     <div class="btn-group">
-      <button class="menu-btn" onclick="window.location.href='form-input.html'">Input Data Tidur</button>
-      <button class="menu-btn" onclick="window.location.href='riwayat.html'">Riwayat Prediksi</button>
-      <button class="menu-btn logout" onclick="logout()">Logout</button>
+      <button class="menu-btn" onclick="window.location.href='form-input.html'">
+        Input Data Tidur
+      </button>
+      <button class="menu-btn" onclick="window.location.href='riwayat.html'">
+        Riwayat Prediksi
+      </button>
+      <button class="menu-btn logout" onclick="logout()">
+        Logout
+      </button>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+    const supabaseKey = 'YOUR_SUPABASE_KEY_HERE';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     // Session check on page load
     async function showUser() {
       document.getElementById("userWelcome").innerText = "Memuat...";
-      // Cek user session (wajib, agar halaman tidak bisa diakses tanpa login)
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        sessionStorage.clear(); // pastikan bersih
+        sessionStorage.clear();
         window.location.href = "login-user.html";
         return;
       }
-      const name = user.user_metadata && user.user_metadata.name
-        ? user.user_metadata.name
-        : user.email;
+      const name = user.user_metadata?.name || user.email;
       document.getElementById("userWelcome").innerText = `Halo, ${name}!`;
       sessionStorage.setItem("user_id", user.id);
     }

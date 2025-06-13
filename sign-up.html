@@ -4,140 +4,11 @@
   <meta charset="UTF-8">
   <title>Registrasi Akun SleepWell</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(120deg, #303f9f 0%, #00bcd4 100%);
-      font-family: 'Inter', Arial, sans-serif;
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .signup-container {
-      background: rgba(255,255,255,0.97);
-      border-radius: 18px;
-      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
-      padding: 40px 32px 28px 32px;
-      width: 100%;
-      max-width: 380px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
-    }
-    @keyframes fadein {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    .signup-container h2 {
-      font-weight: 700;
-      font-size: 2rem;
-      color: #21243d;
-      margin-bottom: 14px;
-      letter-spacing: -0.03em;
-      text-align: center;
-    }
-    form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      margin-bottom: 4px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    label {
-      font-size: .97rem;
-      color: #283046;
-      font-weight: 500;
-      margin-bottom: 2px;
-      padding-left: 2px;
-    }
-    input, select {
-      font-size: 1rem;
-      padding: 10px 12px;
-      border-radius: 9px;
-      border: 1.2px solid #d8dee9;
-      outline: none;
-      background: #f6fbfe;
-      margin-bottom: 0;
-      transition: border 0.2s, background 0.14s;
-    }
-    input:focus, select:focus {
-      border: 1.5px solid #00bcd4;
-      background: #f1fcff;
-    }
-    select:invalid {
-      color: #9da5b2;
-    }
-    input::placeholder {
-      color: #b5b9c7;
-      font-size: .97rem;
-    }
-    button[type="submit"] {
-      background: linear-gradient(100deg, #1976d2 50%, #00bcd4 100%);
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      font-weight: 700;
-      font-size: 1.09rem;
-      padding: 12px 0;
-      cursor: pointer;
-      margin-top: 8px;
-      box-shadow: 0 2px 8px 0 rgba(0,188,212,0.12);
-      letter-spacing: 0.02em;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.12s;
-    }
-    button[type="submit"]:hover {
-      background: linear-gradient(90deg, #00bcd4 20%, #1976d2 100%);
-      box-shadow: 0 6px 22px 0 rgba(0,188,212,0.13);
-      transform: translateY(-1.5px) scale(1.018);
-    }
-    #signupMsg {
-      min-height: 21px;
-      margin-top: 7px;
-      font-size: 1rem;
-      font-weight: 500;
-      text-align: center;
-      color: #18b27a;
-      transition: color 0.22s;
-    }
-    #signupMsg.error {
-      color: #e53935;
-    }
-    .signup-bottom-link {
-      margin-top: 20px;
-      font-size: .98rem;
-      color: #1976d2;
-      text-align: center;
-    }
-    .signup-bottom-link a {
-      color: #00bcd4;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .signup-bottom-link a:hover {
-      color: #1976d2;
-      text-decoration: underline;
-    }
-    @media (max-width: 480px) {
-      .signup-container {
-        padding: 18px 6vw 12px 6vw;
-        max-width: 97vw;
-      }
-      .signup-container h2 {
-        font-size: 1.33rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style/sign-up.css" />
 </head>
-<body>
+<body class="signup">
   <div class="signup-container">
     <h2>Registrasi Akun SleepWell</h2>
     <form id="signupForm" autocomplete="on">
@@ -198,10 +69,11 @@
       Sudah punya akun? <a href="login-user.html">Login di sini</a>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+    const supabaseKey = 'YOUR_SUPABASE_KEY_HERE';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     document.getElementById("signupForm").onsubmit = async function(e) {

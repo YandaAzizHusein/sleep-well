@@ -6,147 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Google Fonts Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(120deg, #2762e6 0%, #17cfd8 100%);
-      font-family: 'Inter', Arial, sans-serif;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .login-container {
-      background: #fff;
-      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.10);
-      border-radius: 22px;
-      padding: 40px 36px 30px 36px;
-      width: 100%;
-      max-width: 370px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
-    }
-    @keyframes fadein {
-      from {opacity: 0; transform: translateY(24px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    .login-container h1 {
-      font-weight: 700;
-      font-size: 2.2rem;
-      color: #232e40;
-      margin-bottom: 10px;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-    }
-    .login-container p {
-      font-size: 1.04rem;
-      color: #7a859a;
-      margin-bottom: 30px;
-      text-align: center;
-      line-height: 1.5;
-    }
-    form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-bottom: 10px;
-    }
-    .input-group {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    label {
-      font-size: .99rem;
-      color: #223150;
-      font-weight: 500;
-      padding-left: 2px;
-      margin-bottom: 2px;
-    }
-    input[type="email"], input[type="password"] {
-      font-size: 1.04rem;
-      padding: 12px 14px;
-      border-radius: 11px;
-      border: 1.5px solid #e0e7ef;
-      outline: none;
-      background: #f7fbff;
-      transition: border 0.18s, box-shadow 0.15s;
-      margin-bottom: 0;
-      box-sizing: border-box;
-      color: #223150;
-      font-family: inherit;
-    }
-    input::placeholder {
-      color: #b5b9c7;
-      opacity: 1;
-      font-size: .97rem;
-    }
-    input[type="email"]:focus, input[type="password"]:focus {
-      border: 1.6px solid #1ebacf;
-      box-shadow: 0 0 0 2px #d5f3fa;
-      background: #f2fcff;
-    }
-    button[type="submit"] {
-      background: linear-gradient(90deg, #1e64f0 40%, #1ebacf 100%);
-      color: #fff;
-      border: none;
-      border-radius: 11px;
-      font-weight: 700;
-      font-size: 1.13rem;
-      padding: 13px 0;
-      cursor: pointer;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      width: 100%;
-      box-shadow: 0 4px 16px 0 rgba(29,137,226,0.13);
-      letter-spacing: 0.01em;
-      transition: background 0.16s, box-shadow 0.18s, transform 0.13s;
-    }
-    button[type="submit"]:hover {
-      background: linear-gradient(90deg, #18c6c3 30%, #1e64f0 100%);
-      box-shadow: 0 8px 26px 0 rgba(26,199,207,0.13);
-      transform: scale(1.014) translateY(-1.5px);
-    }
-    #loginMsg {
-      color: #e53935;
-      font-weight: 500;
-      min-height: 21px;
-      margin-bottom: 6px;
-      text-align: center;
-      font-size: .98rem;
-    }
-    .register-link {
-      margin-top: 10px;
-      font-size: .99rem;
-      color: #6b768b;
-      text-align: center;
-    }
-    .register-link a {
-      color: #17b7c6;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.16s;
-    }
-    .register-link a:hover {
-      color: #1e64f0;
-      text-decoration: underline;
-    }
-    @media (max-width: 480px) {
-      .login-container {
-        padding: 26px 8vw 16px 8vw;
-        max-width: 98vw;
-      }
-      .login-container h1 {
-        font-size: 1.3rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style/login-user.css" />
 </head>
-<body>
+<body class="login">
   <div class="login-container">
     <h1>SleepWell AI</h1>
     <p>Masuk untuk melacak dan meningkatkan kualitas tidur Anda.</p>
@@ -166,10 +28,11 @@
       Belum punya akun? <a href="sign-up.html">Daftar di sini</a>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+    const supabaseKey = 'YOUR_SUPABASE_KEY_HERE';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     document.getElementById("loginForm").onsubmit = async function(e) {
