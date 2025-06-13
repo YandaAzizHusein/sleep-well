@@ -7,87 +7,90 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(120deg, #318aff 0%, #11d2cf 100%);
+      background: #f5f8fb;
       font-family: 'Inter', Arial, sans-serif;
       min-height: 100vh;
       margin: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
     }
     .main-container {
       background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
-      margin-top: 60px;
-      padding: 38px 32px 30px 32px;
-      max-width: 350px;
-      width: 98vw;
+      border-radius: 16px;
+      box-shadow: 0 3px 20px 0 rgba(30,50,90,0.08), 0 1.5px 5px #d9e4f5;
+      padding: 36px 32px 28px 32px;
+      width: 100%;
+      max-width: 370px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
-    }
-    @keyframes fadein {
-      from {opacity: 0; transform: translateY(22px);}
-      to {opacity: 1; transform: translateY(0);}
     }
     .main-container h2 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: #153c82;
-      margin-bottom: 16px;
-      letter-spacing: -0.02em;
+      color: #163561;
+      margin-bottom: 12px;
+      letter-spacing: 0;
       text-align: center;
     }
     #userWelcome {
-      color: #209ca9;
-      font-size: 1.18rem;
-      font-weight: 600;
+      color: #2b758a;
+      font-size: 1.09rem;
+      font-weight: 500;
       margin-bottom: 30px;
-      margin-top: 0;
-      min-height: 32px;
+      min-height: 28px;
       text-align: center;
+      background: #f1fbff;
+      border-radius: 8px;
+      padding: 7px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .btn-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 10px;
     }
     .menu-btn {
       width: 100%;
-      margin-bottom: 18px;
-      padding: 15px 0;
+      padding: 12px 0;
       border: none;
-      border-radius: 11px;
-      font-size: 1.13rem;
-      font-weight: 700;
+      border-radius: 9px;
+      font-size: 1.07rem;
+      font-weight: 600;
       color: #fff;
-      background: linear-gradient(90deg, #1976d2 40%, #1ebacf 100%);
-      box-shadow: 0 2px 10px #1976d227;
-      letter-spacing: 0.02em;
+      background: #2196f3;
+      box-shadow: 0 1.5px 8px #2196f31c;
+      letter-spacing: 0.01em;
       cursor: pointer;
-      transition: background 0.18s, transform 0.13s, box-shadow 0.18s;
+      transition: background 0.15s, box-shadow 0.13s, transform 0.11s;
       outline: none;
-      display: block;
-    }
-    .menu-btn:last-child {
-      background: linear-gradient(90deg, #f25767 20%, #fd8454 100%);
-      margin-bottom: 0;
+      border-bottom: 2px solid #207ecc;
     }
     .menu-btn:hover, .menu-btn:focus {
-      background: linear-gradient(90deg, #1ebacf 10%, #1976d2 100%);
-      transform: translateY(-2px) scale(1.016);
-      box-shadow: 0 5px 20px #209ca96e;
+      background: #1565c0;
+      box-shadow: 0 3.5px 15px #207ecc22;
+      transform: translateY(-1px) scale(1.011);
     }
-    .menu-btn:last-child:hover, .menu-btn:last-child:focus {
-      background: linear-gradient(90deg, #fd8454 20%, #f25767 100%);
-      box-shadow: 0 5px 20px #fd845422;
+    .menu-btn.logout {
+      background: #e94e77;
+      border-bottom: 2px solid #b82553;
+      margin-top: 8px;
     }
-    @media (max-width: 520px) {
+    .menu-btn.logout:hover, .menu-btn.logout:focus {
+      background: #b82553;
+      box-shadow: 0 3.5px 15px #e94e7733;
+    }
+    @media (max-width: 500px) {
       .main-container {
-        padding: 18px 6vw 12px 6vw;
-        margin-top: 26px;
+        padding: 18px 6vw 14px 6vw;
         max-width: 97vw;
       }
       .main-container h2 {
-        font-size: 1.19rem;
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -96,9 +99,11 @@
   <div class="main-container">
     <h2>Menu Utama SleepWell</h2>
     <div id="userWelcome">Memuat...</div>
-    <button class="menu-btn" onclick="window.location.href='form-input.html'">Input Data Tidur</button>
-    <button class="menu-btn" onclick="window.location.href='riwayat.html'">Riwayat Prediksi</button>
-    <button class="menu-btn" onclick="logout()">Logout</button>
+    <div class="btn-group">
+      <button class="menu-btn" onclick="window.location.href='form-input.html'">Input Data Tidur</button>
+      <button class="menu-btn" onclick="window.location.href='riwayat.html'">Riwayat Prediksi</button>
+      <button class="menu-btn logout" onclick="logout()">Logout</button>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
@@ -106,14 +111,12 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Cek login dengan Auth (bukan sessionStorage manual)
     async function showUser() {
       const { data: { user }, error } = await supabase.auth.getUser();
       if (!user) {
         window.location.href = "login-user.html";
         return;
       }
-      // Ambil nama dari metadata Auth (hasil sign-up)
       const name = user.user_metadata && user.user_metadata.name
         ? user.user_metadata.name
         : user.email;
