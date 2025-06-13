@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Daftar Akun SleepWell</title>
   <meta charset="UTF-8">
+  <title>Daftar Akun SleepWell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -10,32 +11,30 @@
       background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
       min-height: 100vh;
       margin: 0;
-      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .logo-brand {
       text-align: center;
-      margin-top: 42px;
-      margin-bottom: 12px;
+      margin-top: 40px;
+      margin-bottom: 7px;
     }
     .logo-brand img {
-      width: 72px;
-      height: 56px;
-      margin-bottom: 6px;
-      /* shadow for floating effect */
+      width: 68px;
+      height: 54px;
+      margin-bottom: 5px;
       filter: drop-shadow(0 2px 12px #49cbf366);
     }
     .brand-title {
       font-family: 'Montserrat', 'Inter', Arial, sans-serif;
-      font-size: 2.08rem;
+      font-size: 2rem;
       font-weight: 900;
-      letter-spacing: 1px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 2px;
+      margin-bottom: 0;
+      letter-spacing: 1px;
     }
     .brand-main {
       color: #159ba7;
@@ -49,99 +48,153 @@
       margin-left: 2px;
     }
     .tagline {
-      font-size: 0.95rem;
+      font-size: .98rem;
       color: #459ec6b3;
       font-weight: 500;
       margin-top: 2px;
-      margin-bottom: 3px;
+      margin-bottom: 6px;
       letter-spacing: 0.2px;
       font-family: 'Inter', Arial, sans-serif;
     }
 
     h2 {
       color: #134684;
-      letter-spacing: 1px;
-      text-shadow: 0 1px 0 #fff;
-      margin-bottom: 20px;
-      font-size: 1.28rem;
+      font-size: 1.33rem;
       font-weight: 700;
       text-align: center;
+      margin-bottom: 22px;
+      letter-spacing: 0.3px;
+      text-shadow: 0 1px 0 #fff;
     }
-    form#signupForm {
-      background: #fff;
-      padding: 28px 32px 20px 32px;
-      border-radius: 14px;
-      box-shadow: 0 2px 16px #0001, 0 0.5px 5px #47caff14;
-      max-width: 370px;
+
+    .form-wrapper {
       width: 100%;
-      margin: 0 0 18px 0;
+      max-width: 385px;
+      background: #fff;
+      padding: 34px 32px 22px 32px;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #0001, 0 0.5px 5px #47caff14;
       border-top: 4px solid #4db2e2;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 7px;
+      gap: 3px;
     }
     label {
-      color: #114475;
-      font-weight: 500;
-      margin-top: 6px;
-      display: inline-block;
+      color: #134684;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      letter-spacing: .1px;
+      padding-left: 2px;
     }
     input, select {
-      width: 98%;
-      margin: 6px 0 14px 0;
-      padding: 9px 8px;
-      border: 1px solid #c5d0e6;
-      border-radius: 7px;
+      width: 100%;
+      padding: 10px 11px;
+      border: 1.4px solid #c5d0e6;
+      border-radius: 8px;
       font-size: 1rem;
-      box-sizing: border-box;
+      font-family: inherit;
       background: #f8fbfd;
-      transition: border 0.2s;
+      transition: border 0.2s, background 0.15s;
+      color: #274472;
+      box-sizing: border-box;
+    }
+    input::placeholder {
+      color: #b5b9c7;
+      font-size: .98rem;
     }
     input:focus, select:focus {
-      border: 1.5px solid #39a0fc;
-      outline: none;
+      border: 1.7px solid #39a0fc;
       background: #eaf4ff;
+      outline: none;
+    }
+    select:invalid {
+      color: #a1adc7;
+    }
+    input[type="number"]::-webkit-inner-spin-button, 
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      appearance: textfield;
+    }
+    #name {
+      text-transform: capitalize;
     }
     button[type="submit"] {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       background: linear-gradient(90deg, #12cbc4 0%, #4b9bfa 100%);
-      color: white;
+      color: #fff;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       cursor: pointer;
-      margin-top: 8px;
-      box-shadow: 0 1px 8px #49cbf33b;
-      transition: background 0.17s, box-shadow 0.17s;
-      letter-spacing: 0.2px;
+      margin-top: 11px;
+      box-shadow: 0 2px 10px #49cbf33b;
+      transition: background 0.17s, box-shadow 0.17s, transform 0.13s;
+      letter-spacing: 0.18px;
     }
     button[type="submit"]:hover {
       background: linear-gradient(90deg, #22d3ee 10%, #4361ee 100%);
-      box-shadow: 0 2px 12px #3b82f644;
+      box-shadow: 0 3px 14px #3b82f644;
+      transform: scale(1.014) translateY(-1.5px);
     }
     #signupMsg {
       min-height: 18px;
-      margin-top: 10px;
-      font-size: 1rem;
+      font-size: 1.01rem;
       font-weight: 500;
-    }
-    p, a {
-      font-size: 0.98rem;
-      color: #274472;
-      margin-top: 12px;
-      margin-bottom: 30px;
       text-align: center;
+      margin-top: 13px;
+      margin-bottom: 5px;
+      transition: color 0.22s;
+    }
+    #signupMsg.success {
+      color: #18b27a;
+    }
+    #signupMsg.error {
+      color: #e53935;
+    }
+    .form-bottom-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.01rem;
+      color: #274472;
+    }
+    .form-bottom-link a {
+      color: #12cbc4;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 4px;
+      transition: color 0.16s;
+    }
+    .form-bottom-link a:hover {
+      color: #4361ee;
+      text-decoration: underline;
     }
     @media (max-width: 480px) {
-      form#signupForm {
-        padding: 14px 5vw 14px 5vw;
+      .form-wrapper {
+        padding: 18px 6vw 14px 6vw;
         max-width: 97vw;
       }
       .brand-title {
-        font-size: 1.3rem;
+        font-size: 1.26rem;
       }
       .logo-brand img {
-        width: 52px;
-        height: 42px;
+        width: 44px;
+        height: 32px;
+      }
+      h2 {
+        font-size: 1.04rem;
       }
     }
   </style>
@@ -155,47 +208,63 @@
     <div class="tagline">Sleep Smarter. Live Better.</div>
   </div>
   <h2>Registrasi Akun SleepWell</h2>
-  <form id="signupForm">
-    <label for="name">Nama Lengkap:</label><br>
-    <input id="name" name="name" required><br><br>
-    <label for="email">Email:</label><br>
-    <input id="email" name="email" type="email" required><br><br>
-    <label for="password">Password:</label><br>
-    <input id="password" name="password" type="password" required><br><br>
-    <label for="gender">Jenis Kelamin:</label><br>
-    <select id="gender" name="gender" required>
-      <option value="">-- Pilih --</option>
-      <option value="Male">Pria</option>
-      <option value="Female">Wanita</option>
-    </select><br><br>
-    <label for="age">Umur:</label><br>
-    <input id="age" name="age" type="number" min="10" max="100" required><br><br>
-    <label for="occupation">Pekerjaan:</label><br>
-    <select id="occupation" name="occupation" required>
-      <option value="">-- Pilih --</option>
-      <option value="Accountant">Accountant</option>
-      <option value="Doctor">Doctor</option>
-      <option value="Engineer">Engineer</option>
-      <option value="Lawyer">Lawyer</option>
-      <option value="Manager">Manager</option>
-      <option value="Nurse">Nurse</option>
-      <option value="Sales Representative">Sales Representative</option>
-      <option value="Salesperson">Salesperson</option>
-      <option value="Scientist">Scientist</option>
-      <option value="Software Engineer">Software Engineer</option>
-      <option value="Teacher">Teacher</option>
-    </select><br><br>
-    <label for="bmi_category">Kategori BMI:</label><br>
-    <select id="bmi_category" name="bmi_category" required>
-      <option value="">-- Pilih --</option>
-      <option value="Normal">Normal</option>
-      <option value="Overweight">Overweight</option>
-      <option value="Obese">Obese</option>
-    </select><br><br>
+  <form id="signupForm" class="form-wrapper" autocomplete="on">
+    <div class="form-group">
+      <label for="name">Nama Lengkap</label>
+      <input id="name" name="name" placeholder="Masukkan nama lengkap" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="nama@email.com" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Minimal 6 karakter" required minlength="6">
+    </div>
+    <div class="form-group">
+      <label for="gender">Jenis Kelamin</label>
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected hidden>-- Pilih --</option>
+        <option value="Male">Pria</option>
+        <option value="Female">Wanita</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="age">Umur</label>
+      <input id="age" name="age" type="number" min="10" max="100" step="1" placeholder="Masukkan umur" required>
+    </div>
+    <div class="form-group">
+      <label for="occupation">Pekerjaan</label>
+      <select id="occupation" name="occupation" required>
+        <option value="" disabled selected hidden>-- Pilih --</option>
+        <option>Accountant</option>
+        <option>Doctor</option>
+        <option>Engineer</option>
+        <option>Lawyer</option>
+        <option>Manager</option>
+        <option>Nurse</option>
+        <option>Sales Representative</option>
+        <option>Salesperson</option>
+        <option>Scientist</option>
+        <option>Software Engineer</option>
+        <option>Teacher</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="bmi_category">Kategori BMI</label>
+      <select id="bmi_category" name="bmi_category" required>
+        <option value="" disabled selected hidden>-- Pilih --</option>
+        <option value="Normal">Normal</option>
+        <option value="Overweight">Overweight</option>
+        <option value="Obese">Obese</option>
+      </select>
+    </div>
     <button type="submit">Daftar</button>
+    <div id="signupMsg"></div>
   </form>
-  <div id="signupMsg" style="margin:10px 0; color:blue;"></div>
-  <p>Sudah punya akun? <a href="login-user.html">Login di sini</a></p>
+  <div class="form-bottom-link">
+    Sudah punya akun? <a href="login-user.html">Login di sini</a>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
@@ -212,24 +281,38 @@
       const age = fd.get("age");
       const occupation = fd.get("occupation");
       const bmi_category = fd.get("bmi_category");
+      const msgBox = document.getElementById("signupMsg");
+      msgBox.className = "";
 
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name,
-            gender,
-            age,
-            occupation,
-            bmi_category
+      // Validasi front-end simple
+      if (password.length < 6) {
+        msgBox.className = "error";
+        msgBox.innerText = "Password minimal 6 karakter!";
+        return;
+      }
+
+      msgBox.innerText = "Mendaftarkan akun...";
+      try {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { name, gender, age, occupation, bmi_category }
           }
-        }
-      });
+        });
 
-      document.getElementById("signupMsg").innerText = error
-        ? "Gagal daftar: " + error.message
-        : "Registrasi sukses! Cek email kamu untuk verifikasi sebelum login.";
+        if (error) {
+          msgBox.className = "error";
+          msgBox.innerText = "Gagal daftar: " + error.message;
+        } else {
+          msgBox.className = "success";
+          msgBox.innerText = "Registrasi sukses! Silakan cek email kamu untuk verifikasi sebelum login.";
+          setTimeout(()=>{window.location.href="login-user.html"},3200);
+        }
+      } catch (err) {
+        msgBox.className = "error";
+        msgBox.innerText = "Terjadi error sistem. Silakan ulangi.";
+      }
     };
   </script>
 </body>
