@@ -3,31 +3,115 @@
 <head>
   <title>Daftar Akun SleepWell</title>
   <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      margin-top: 36px;
+      color: #134684;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 0 #fff;
+    }
+    form#signupForm {
+      background: #fff;
+      padding: 28px 32px 20px 32px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px #0002;
+      max-width: 370px;
+      width: 100%;
+      margin: 30px 0 18px 0;
+    }
+    label {
+      color: #114475;
+      font-weight: 500;
+    }
+    input, select {
+      width: 98%;
+      margin: 6px 0 14px 0;
+      padding: 8px;
+      border: 1px solid #c5d0e6;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      background: #f8fbfd;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus {
+      border: 1.5px solid #489bdf;
+      outline: none;
+      background: #e8f0fe;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(90deg, #3b82f6 30%, #0ea5e9 100%);
+      color: white;
+      font-weight: bold;
+      font-size: 1.08rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 5px;
+      box-shadow: 0 1px 6px #68aeea34;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #2563eb 30%, #0284c7 100%);
+      box-shadow: 0 2px 12px #3b82f633;
+    }
+    #signupMsg {
+      min-height: 18px;
+      margin-top: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    p, a {
+      font-size: 0.98rem;
+      color: #274472;
+      margin-top: 12px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    @media (max-width: 480px) {
+      form#signupForm {
+        padding: 16px 6vw 14px 6vw;
+        max-width: 98vw;
+      }
+    }
+  </style>
 </head>
 <body>
   <h2>Registrasi Akun SleepWell</h2>
   <form id="signupForm">
-    <label>Nama Lengkap:</label><br>
-    <input name="name" required><br><br>
+    <label for="name">Nama Lengkap:</label><br>
+    <input id="name" name="name" required><br><br>
     
-    <label>Email:</label><br>
-    <input name="email" type="email" required><br><br>
+    <label for="email">Email:</label><br>
+    <input id="email" name="email" type="email" required><br><br>
     
-    <label>Password:</label><br>
-    <input name="password" type="password" required><br><br>
+    <label for="password">Password:</label><br>
+    <input id="password" name="password" type="password" required><br><br>
     
-    <label>Jenis Kelamin:</label><br>
-    <select name="gender" required>
+    <label for="gender">Jenis Kelamin:</label><br>
+    <select id="gender" name="gender" required>
       <option value="">-- Pilih --</option>
       <option value="Male">Pria</option>
       <option value="Female">Wanita</option>
     </select><br><br>
     
-    <label>Umur:</label><br>
-    <input name="age" type="number" min="10" max="100" required><br><br>
+    <label for="age">Umur:</label><br>
+    <input id="age" name="age" type="number" min="10" max="100" required><br><br>
     
-    <label>Pekerjaan:</label><br>
-    <select name="occupation" required>
+    <label for="occupation">Pekerjaan:</label><br>
+    <select id="occupation" name="occupation" required>
       <option value="">-- Pilih --</option>
       <option value="Accountant">Accountant</option>
       <option value="Doctor">Doctor</option>
@@ -42,8 +126,8 @@
       <option value="Teacher">Teacher</option>
     </select><br><br>
     
-    <label>Kategori BMI:</label><br>
-    <select name="bmi_category" required>
+    <label for="bmi_category">Kategori BMI:</label><br>
+    <select id="bmi_category" name="bmi_category" required>
       <option value="">-- Pilih --</option>
       <option value="Normal">Normal</option>
       <option value="Overweight">Overweight</option>
@@ -91,98 +175,5 @@
         : "Registrasi sukses! Cek email kamu untuk verifikasi sebelum login.";
     };
   </script>
-  <style>
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  h2 {
-    margin-top: 36px;
-    color: #134684;
-    letter-spacing: 1px;
-    text-shadow: 0 1px 0 #fff;
-  }
-
-  form#signupForm {
-    background: #fff;
-    padding: 28px 32px 20px 32px;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px #0002;
-    max-width: 370px;
-    width: 100%;
-    margin: 30px 0 18px 0;
-  }
-
-  label {
-    color: #114475;
-    font-weight: 500;
-  }
-
-  input, select {
-    width: 98%;
-    margin: 6px 0 14px 0;
-    padding: 8px;
-    border: 1px solid #c5d0e6;
-    border-radius: 6px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    background: #f8fbfd;
-    transition: border 0.2s;
-  }
-  input:focus, select:focus {
-    border: 1.5px solid #489bdf;
-    outline: none;
-    background: #e8f0fe;
-  }
-
-  button[type="submit"] {
-    width: 100%;
-    padding: 11px;
-    background: linear-gradient(90deg, #3b82f6 30%, #0ea5e9 100%);
-    color: white;
-    font-weight: bold;
-    font-size: 1.08rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 5px;
-    box-shadow: 0 1px 6px #68aeea34;
-    transition: background 0.2s, box-shadow 0.2s;
-  }
-  button[type="submit"]:hover {
-    background: linear-gradient(90deg, #2563eb 30%, #0284c7 100%);
-    box-shadow: 0 2px 12px #3b82f633;
-  }
-
-  #signupMsg {
-    min-height: 18px;
-    margin-top: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-  }
-
-  p, a {
-    font-size: 0.98rem;
-    color: #274472;
-    margin-top: 12px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  @media (max-width: 480px) {
-    form#signupForm {
-      padding: 16px 6vw 14px 6vw;
-      max-width: 98vw;
-    }
-  }
-</style>
-
 </body>
 </html>
