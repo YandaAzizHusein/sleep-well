@@ -3,9 +3,10 @@
 <head>
   <title>Daftar Akun SleepWell</title>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', Arial, sans-serif;
       background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
       min-height: 100vh;
       margin: 0;
@@ -14,58 +15,108 @@
       flex-direction: column;
       align-items: center;
     }
+    .logo-brand {
+      text-align: center;
+      margin-top: 42px;
+      margin-bottom: 12px;
+    }
+    .logo-brand img {
+      width: 72px;
+      height: 56px;
+      margin-bottom: 6px;
+      /* shadow for floating effect */
+      filter: drop-shadow(0 2px 12px #49cbf366);
+    }
+    .brand-title {
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 2.08rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .brand-main {
+      color: #159ba7;
+    }
+    .brand-accent {
+      background: linear-gradient(90deg,#15c3b5 20%,#39a0fc 70%,#715aff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      margin-left: 2px;
+    }
+    .tagline {
+      font-size: 0.95rem;
+      color: #459ec6b3;
+      font-weight: 500;
+      margin-top: 2px;
+      margin-bottom: 3px;
+      letter-spacing: 0.2px;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
     h2 {
-      margin-top: 36px;
       color: #134684;
       letter-spacing: 1px;
       text-shadow: 0 1px 0 #fff;
+      margin-bottom: 20px;
+      font-size: 1.28rem;
+      font-weight: 700;
+      text-align: center;
     }
     form#signupForm {
       background: #fff;
       padding: 28px 32px 20px 32px;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px #0002;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px #0001, 0 0.5px 5px #47caff14;
       max-width: 370px;
       width: 100%;
-      margin: 30px 0 18px 0;
+      margin: 0 0 18px 0;
+      border-top: 4px solid #4db2e2;
     }
     label {
       color: #114475;
       font-weight: 500;
+      margin-top: 6px;
+      display: inline-block;
     }
     input, select {
       width: 98%;
       margin: 6px 0 14px 0;
-      padding: 8px;
+      padding: 9px 8px;
       border: 1px solid #c5d0e6;
-      border-radius: 6px;
+      border-radius: 7px;
       font-size: 1rem;
       box-sizing: border-box;
       background: #f8fbfd;
       transition: border 0.2s;
     }
     input:focus, select:focus {
-      border: 1.5px solid #489bdf;
+      border: 1.5px solid #39a0fc;
       outline: none;
-      background: #e8f0fe;
+      background: #eaf4ff;
     }
     button[type="submit"] {
       width: 100%;
-      padding: 11px;
-      background: linear-gradient(90deg, #3b82f6 30%, #0ea5e9 100%);
+      padding: 12px;
+      background: linear-gradient(90deg, #12cbc4 0%, #4b9bfa 100%);
       color: white;
-      font-weight: bold;
-      font-size: 1.08rem;
+      font-weight: 700;
+      font-size: 1.1rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 5px;
-      box-shadow: 0 1px 6px #68aeea34;
-      transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+      box-shadow: 0 1px 8px #49cbf33b;
+      transition: background 0.17s, box-shadow 0.17s;
+      letter-spacing: 0.2px;
     }
     button[type="submit"]:hover {
-      background: linear-gradient(90deg, #2563eb 30%, #0284c7 100%);
-      box-shadow: 0 2px 12px #3b82f633;
+      background: linear-gradient(90deg, #22d3ee 10%, #4361ee 100%);
+      box-shadow: 0 2px 12px #3b82f644;
     }
     #signupMsg {
       min-height: 18px;
@@ -82,34 +133,43 @@
     }
     @media (max-width: 480px) {
       form#signupForm {
-        padding: 16px 6vw 14px 6vw;
-        max-width: 98vw;
+        padding: 14px 5vw 14px 5vw;
+        max-width: 97vw;
+      }
+      .brand-title {
+        font-size: 1.3rem;
+      }
+      .logo-brand img {
+        width: 52px;
+        height: 42px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="logo-brand">
+    <img src="logo.png" alt="SleepWell Logo">
+    <div class="brand-title">
+      <span class="brand-main">Sleep</span><span class="brand-accent">Well</span>
+    </div>
+    <div class="tagline">Sleep Smarter. Live Better.</div>
+  </div>
   <h2>Registrasi Akun SleepWell</h2>
   <form id="signupForm">
     <label for="name">Nama Lengkap:</label><br>
     <input id="name" name="name" required><br><br>
-    
     <label for="email">Email:</label><br>
     <input id="email" name="email" type="email" required><br><br>
-    
     <label for="password">Password:</label><br>
     <input id="password" name="password" type="password" required><br><br>
-    
     <label for="gender">Jenis Kelamin:</label><br>
     <select id="gender" name="gender" required>
       <option value="">-- Pilih --</option>
       <option value="Male">Pria</option>
       <option value="Female">Wanita</option>
     </select><br><br>
-    
     <label for="age">Umur:</label><br>
     <input id="age" name="age" type="number" min="10" max="100" required><br><br>
-    
     <label for="occupation">Pekerjaan:</label><br>
     <select id="occupation" name="occupation" required>
       <option value="">-- Pilih --</option>
@@ -125,7 +185,6 @@
       <option value="Software Engineer">Software Engineer</option>
       <option value="Teacher">Teacher</option>
     </select><br><br>
-    
     <label for="bmi_category">Kategori BMI:</label><br>
     <select id="bmi_category" name="bmi_category" required>
       <option value="">-- Pilih --</option>
@@ -133,7 +192,6 @@
       <option value="Overweight">Overweight</option>
       <option value="Obese">Obese</option>
     </select><br><br>
-    
     <button type="submit">Daftar</button>
   </form>
   <div id="signupMsg" style="margin:10px 0; color:blue;"></div>
@@ -155,7 +213,6 @@
       const occupation = fd.get("occupation");
       const bmi_category = fd.get("bmi_category");
 
-      // Signup Supabase Auth + metadata profil
       const { error } = await supabase.auth.signUp({
         email,
         password,
