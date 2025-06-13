@@ -1,0 +1,84 @@
+/* Global Font & Root Variables (bisa disalin ulang atau di-@import jika belum ada) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+:root {
+  --primary: #6751ef;
+  --background: #f6f8fc;
+  --text: #2d2e32;
+  --shadow: 0 4px 32px 0 rgba(66, 71, 112, 0.08);
+}
+
+body.signup {
+  margin: 0;
+  background: linear-gradient(120deg, #303f9f 0%, #00bcd4 100%);
+  color: var(--text);
+  font-family: 'Inter', Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container {
+  background: rgba(255,255,255,0.97);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 0 rgba(44,62,80,0.09);
+  padding: 40px 32px 28px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadein 0.9s cubic-bezier(.42,0,.58,1);
+}
+
+.signup-container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.signup-container label {
+  display: block;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.signup-container input,
+.signup-container select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.signup-container button[type="submit"] {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.signup-container button[type="submit"]:hover {
+  background: #2563eb;
+  transform: translateY(-2px) scale(1.03);
+}
+
+#signupMsg {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: red;
+}
+
+.signup-bottom-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
