@@ -254,35 +254,35 @@
       <li>Langkah Harian: <b>${inputData.Daily_Steps}</b> langkah</li>
     `;
 
-    // --- RULE SIMPLE PREDIKSI ---
-    let sleepQuality = "Normal";
-    let disorder = "-";
-    let advice = [];
-    let sleepDuration = 7; // Default 7 jam, boleh diganti sesuai logika prediksi
+  // --- RULE SIMPLE PREDIKSI ---
+let sleepQuality = "Normal";
+let disorder = "-";
+let advice = [];
+let sleepDuration = 7; // <--- Tambahkan inisialisasi default di sini
 
-    if (inputData.Stress_Level > 7) {
-      sleepQuality = "Kurang";
-      disorder = "Risiko insomnia atau kualitas tidur rendah";
-      advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
-      sleepDuration = 5.5;
-    }
-    if (inputData.Physical_Activity_Level < 25) {
-      sleepQuality = "Kurang";
-      disorder = "Kurang olahraga";
-      advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
-      sleepDuration = 6;
-    }
-    if (inputData.Heart_Rate > 100) {
-      advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
-    }
-    if (inputData.Daily_Steps < 3000) {
-      advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
-      sleepDuration -= 0.5;
-    }
-    if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
-      advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
-      sleepDuration = 7.5;
-    }
+if (inputData.Stress_Level > 7) {
+  sleepQuality = "Kurang";
+  disorder = "Risiko insomnia atau kualitas tidur rendah";
+  advice.push("Coba lakukan relaksasi sebelum tidur (meditasi, nafas dalam, dsb)");
+  sleepDuration = 5.5;
+}
+if (inputData.Physical_Activity_Level < 25) {
+  sleepQuality = "Kurang";
+  disorder = "Kurang olahraga";
+  advice.push("Tingkatkan aktivitas fisik di siang/sore hari.");
+  sleepDuration = 6;
+}
+if (inputData.Heart_Rate > 100) {
+  advice.push("Cek tekanan darah atau konsultasi dokter jika detak jantung terus tinggi.");
+}
+if (inputData.Daily_Steps < 3000) {
+  advice.push("Cobalah berjalan kaki atau olahraga ringan minimal 3000 langkah per hari.");
+  sleepDuration -= 0.5;
+}
+if (sleepQuality === "Normal" && inputData.Stress_Level < 5 && inputData.Physical_Activity_Level >= 50 && inputData.Heart_Rate <= 90) {
+  advice.push("Pola tidur dan gaya hidup Anda sudah cukup baik, pertahankan!");
+  sleepDuration = 7.5;
+}
 
     // Tampilkan hasil prediksi ke user
     document.getElementById("aiResult").innerHTML = `
