@@ -2,209 +2,352 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Hasil Prediksi Tidur • SleepWell AI</title>
+  <title>Input Data Tidur Harian • SleepWell AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/logo-sinyal-tenang.png"/>
   <style>
-    :root {
-      --primary: #6751ef;
-      --blue: #2563eb;
-      --gray: #eef2fe;
-      --background: #f5f7fa;
-      --success: #16a34a;
-      --danger: #e11d48;
-      --shadow: 0 4px 24px 0 rgba(66,71,112,0.08);
-    }
     body {
-      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
+      margin: 0;
       font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
-      margin: 0; color: #232336;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f6dfff 100%);
       min-height: 100vh;
-      padding-bottom: 40px;
     }
-    .container {
-      max-width: 430px; margin: 46px auto 0 auto;
+    .center-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100vw;
+    }
+    .form-card {
       background: #fff;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 32px 20px 28px 20px;
+      padding: 34px 28px 24px 28px;
+      border-radius: 1.7rem;
+      box-shadow: 0 8px 40px 0 rgba(103,81,239,0.13);
+      max-width: 420px;
+      width: 100%;
+      margin: 40px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadein .6s;
     }
-    .header {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(30px);}
+      to   {opacity: 1; transform: none;}
     }
-    .header img { width:38px; border-radius:8px; }
-    .header-title {
-      font-weight: 800; font-size: 1.3rem; color: var(--primary); letter-spacing: .5px;
+    .logo-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
     }
-    h2 {
-      font-size: 1.25rem; color: var(--blue);
-      font-weight: 700; margin: 0 0 18px 0; text-align: center;
+    .logo-row img { width: 38px; border-radius: 7px;}
+    .app-title {
+      font-size: 1.21rem;
+      font-weight: 800;
+      color: #6751ef;
+      letter-spacing: .2px;
+    }
+    .form-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #2563eb;
+      margin-bottom: 7px;
     }
     .profile-box {
-      background: var(--gray); border-radius: 12px; padding: 12px 15px; margin-bottom: 18px; font-size: .98rem;
-      box-shadow: 0 1px 6px 0 rgba(66,71,112,.05);
-      line-height: 1.6;
+      background: #f7f8fd;
+      border: 1.2px solid #eef2fe;
+      border-radius: 10px;
+      font-size: .97rem;
+      margin-bottom: 5px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 16px;
+      padding: 8px 10px 4px 10px;
+      color: #233;
+      box-sizing: border-box;
     }
-    .results-row {
-      display: flex; gap: 12px; margin-bottom: 17px; flex-wrap: wrap; justify-content: center;
+    .profile-label {
+      color: #888;
+      font-weight: 600;
     }
-    .result-card {
-      background: #f8f9fd;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px 0 rgba(66,71,112,.08);
-      padding: 17px 16px;
+    .profile-value {
+      font-weight: 500;
+    }
+    .input-group {
+      margin: 7px 0 0 0;
+    }
+    .input-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      margin-bottom: 3px;
+      font-size: .99rem;
+    }
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .slider-wrap input[type=range] {
+      flex: 1;
+      accent-color: #6751ef;
+      height: 5px;
+    }
+    .slider-value {
+      min-width: 36px;
+      background: #eef2fe;
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 1.08rem;
       text-align: center;
-      flex: 1 1 100px;
-      min-width: 110px;
-      max-width: 140px;
-      margin-bottom: 8px;
+      border-radius: .8em;
+      border: 1px solid #eef2fe;
+      padding: 3px 7px;
     }
-    .result-title { color: var(--blue); font-size: .97rem; font-weight: 600; margin-bottom: 7px;}
-    .result-value { font-size: 1.6rem; font-weight: 800; color: var(--primary);}
-    .result-note { font-size: .97rem; color: #999; margin-top: 3px;}
-    .cbt-section {
-      background: #f4fff6;
-      border-radius: 14px;
-      box-shadow: 0 1px 7px 0 rgba(22,163,74,0.09);
-      padding: 14px 15px;
-      margin: 13px 0 22px 0;
+    .input-box {
+      width: 100%;
+      border: 1.3px solid #eef2fe;
+      border-radius: .9em;
+      padding: .8em 1em;
+      font-size: 1.09rem;
+      font-family: inherit;
+      margin-bottom: 0;
+      margin-top: 2px;
+      background: #f9fafd;
+      transition: border .15s, box-shadow .15s;
     }
-    .cbt-section strong { color: var(--success);}
-    .cbt-section ul {margin: 6px 0 0 1.1em; padding: 0;}
-    .cbt-section li {margin-bottom: 4px;}
-    .btn-row {
-      display: flex; gap: 13px; margin-top: 14px; flex-wrap: wrap; justify-content: center;
+    .input-box:focus {
+      border: 1.6px solid #6751ef;
+      outline: none;
+      box-shadow: 0 0 0 2px #e3d8fd33;
     }
-    .btn-main {
-      background: var(--primary); color: #fff; border: none; border-radius: 1.2rem;
-      padding: .9rem 1.7rem; font-size: 1.1rem; font-weight: 700;
-      min-width: 125px;
-      cursor: pointer; transition: background .17s, transform .17s;
-      box-shadow: 0 2px 9px 0 rgba(66,71,112,.08);
+    .input-box::placeholder { color: #bbc; font-size: .98em; }
+    .button-main {
+      width: 100%;
+      background: linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
+      color: #fff;
+      border: none;
+      font-size: 1.13rem;
+      font-weight: 700;
+      border-radius: 1.2em;
+      padding: 1em 0;
+      margin-top: 8px;
+      margin-bottom: 2px;
+      cursor: pointer;
+      transition: background .16s, box-shadow .16s, transform .15s;
+      box-shadow: 0 2px 12px 0 rgba(103,81,239,0.11);
     }
-    .btn-main:hover { background: var(--blue); transform: translateY(-2px) scale(1.02);}
-    .btn-outline {
-      background: #f3f5fb; color: var(--primary); border-radius: 1.2rem; border: none;
-      padding: .8rem 0; font-size: 1rem; font-weight: 600; cursor: pointer; min-width: 120px;
-      transition: background .15s;
+    .button-main:hover {
+      background: linear-gradient(90deg,#2563eb 10%,#6751ef 100%);
+      transform: translateY(-1.5px) scale(1.015);
     }
-    .btn-outline:hover { background: var(--gray);}
-    #loader {
-      display:none; color: var(--blue); font-weight: 600; margin: 14px 0; text-align: center;
+    .button-outline {
+      width: 100%;
+      background: none;
+      color: #6751ef;
+      border: 1.2px solid #e1e6fd;
+      border-radius: 1.2em;
+      padding: .9em 0;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background .14s, color .14s;
     }
-    #errorMsg {
-      color: var(--danger); font-weight: 500; margin: 16px 0 0 0; text-align: center;
+    .button-outline:hover {
+      background: #f4f6fd;
+      color: #2563eb;
     }
-    @media (max-width: 600px) {
-      .container {padding: 20px 2vw;}
-      .header-title { font-size: 1rem; }
-      h2 {font-size: 1rem;}
-      .results-row { flex-direction: column; gap: 7px;}
+    .alert {
+      text-align: center;
+      color: #e11d48;
+      background: #fff1f2;
+      border: 1.2px solid #ffe4e6;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 4px 0 8px 0;
+      font-size: .98rem;
+      font-weight: 500;
+      display: none;
+    }
+    .loader {
+      display: none;
+      text-align: center;
+      color: #2563eb;
+      font-weight: 600;
+      margin: 8px 0 8px 0;
+    }
+    @media (max-width:600px){
+      .form-card {max-width:98vw; padding:18px 4vw 20px 4vw;}
+      .profile-box {grid-template-columns:1fr;}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header Branding -->
-    <div class="header">
-      <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
-      <span class="header-title">SleepWell <span style="color:var(--blue)">AI</span></span>
-    </div>
-    <h2>Hasil Prediksi Tidur Anda</h2>
-    <div id="userProfile" class="profile-box"></div>
-    <div class="results-row">
-      <div class="result-card">
-        <div class="result-title">Durasi Tidur</div>
-        <div class="result-value" id="sleepDuration">-</div>
-        <div class="result-note">jam/malam</div>
+  <div class="center-wrap">
+    <form class="form-card" id="sleepForm" autocomplete="off">
+      <div class="logo-row">
+        <img src="img/logo-sinyal-tenang.png" alt="Logo SleepWell" />
+        <span class="app-title">SleepWell <span style="color:#2563eb">AI</span></span>
       </div>
-      <div class="result-card">
-        <div class="result-title">Kualitas Tidur</div>
-        <div class="result-value" id="sleepQuality">-</div>
-        <div class="result-note">/10</div>
-      </div>
-      <div class="result-card">
-        <div class="result-title">Gangguan Tidur</div>
-        <div class="result-value" id="sleepDisorder">-</div>
-        <div class="result-note" style="color:#e11d48" id="disorderNote"></div>
-      </div>
-    </div>
-    <div class="cbt-section" id="cbtBox" style="display:none"></div>
-    <div id="loader">⏳ Mengambil hasil prediksi...</div>
-    <div id="errorMsg"></div>
-    <div class="btn-row">
-      <button class="btn-main" onclick="window.location.href='riwayat.html'">Riwayat Tidur</button>
-      <button class="btn-main" onclick="window.location.href='form-input.html'">Input Baru</button>
-      <button class="btn-outline" onclick="window.location.href='main-menu.html'">Menu Utama</button>
-    </div>
-  </div>
-  <script>
-    // Dummy prediksi/ambil dari sessionStorage (simulasi, ganti sesuai backend kamu)
-    function fetchPrediction() {
-      // Loader tampil
-      document.getElementById("loader").style.display = 'block';
-      document.getElementById("errorMsg").innerText = '';
-      let input = {};
-      try {
-        input = JSON.parse(sessionStorage.getItem("sleep_input") || "{}");
-      } catch { input = {}; }
+      <div class="form-title">Input Data Tidur Harian</div>
 
-      // Simulasi fetch hasil prediksi
-      setTimeout(() => {
-        document.getElementById("loader").style.display = 'none';
-        if (!input || !input.sleep_data_id) {
-          document.getElementById("errorMsg").innerText = "Gagal memuat hasil prediksi. Silakan input ulang data tidur.";
-          return;
-        }
-        // Profil user
-        document.getElementById("userProfile").innerHTML = `
-          <b>${input.name || "Pengguna"}</b> •
-          Gender: <b>${input.gender || '-'}</b> •
-          Usia: <b>${input.age || '-'}</b> •
-          Pekerjaan: <b>${input.occupation || '-'}</b> •
-          BMI: <b>${input.bmi_category || '-'}</b>
-        `;
-        // Nilai prediksi dummy (ganti dengan hasil dari backend/predict model)
-        const durasi = (Math.random() * 3 + 5.5).toFixed(2); // 5.5 - 8.5 jam
-        const kualitas = Math.floor(Math.random() * 4 + 6);  // 6-9/10
-        let gangguan = "-";
-        let disorderNote = "";
-        if (durasi < 6) { gangguan = "Kurang tidur"; disorderNote = "Perlu perbaiki durasi tidur!"; }
-        else if (kualitas < 7) { gangguan = "Tidur tidak nyenyak"; disorderNote = "Perhatikan kualitas tidur!"; }
-        else { gangguan = "Tidak ada"; disorderNote = ""; }
-        document.getElementById("sleepDuration").innerText = durasi;
-        document.getElementById("sleepQuality").innerText = kualitas;
-        document.getElementById("sleepDisorder").innerText = gangguan;
-        document.getElementById("disorderNote").innerText = disorderNote;
-        // Saran CBT-I/sleep hygiene
-        let saran = [];
-        if (gangguan === "Kurang tidur") {
-          saran = [
-            "Tidur dan bangun di waktu yang sama setiap hari.",
-            "Batasi penggunaan gadget sebelum tidur.",
-            "Ciptakan lingkungan kamar yang tenang & gelap."
-          ];
-        } else if (gangguan === "Tidur tidak nyenyak") {
-          saran = [
-            "Hindari kafein dan makanan berat sebelum tidur.",
-            "Relaksasi (napas dalam, meditasi, baca ringan) sebelum tidur.",
-            "Atur suhu kamar tetap nyaman."
-          ];
-        } else {
-          saran = [
-            "Pertahankan pola tidur sehat.",
-            "Tetap aktif secara fisik & atur stres.",
-            "Rutin evaluasi kualitas tidur secara berkala."
-          ];
-        }
-        document.getElementById("cbtBox").style.display = "block";
-        document.getElementById("cbtBox").innerHTML = `
-          <strong>Saran & Solusi SleepWell:</strong>
-          <ul>${saran.map(s=>`<li>${s}</li>`).join("")}</ul>
-        `;
-      }, 900);
+      <div class="profile-box" id="userProfile">
+        <!-- Diisi dari JS -->
+      </div>
+
+      <div class="input-group">
+        <div class="input-label-row">
+          <label for="Physical_Activity_Level">Aktivitas Fisik (1-100):</label>
+          <span id="physicalActivityValue" class="slider-value">50</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="Physical_Activity_Level" min="1" max="100" value="50" aria-valuenow="50" aria-label="Aktivitas Fisik">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label-row">
+          <label for="Stress_Level">Tingkat Stres (1-10):</label>
+          <span id="stressLevelValue" class="slider-value">5</span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="Stress_Level" min="1" max="10" value="5" aria-valuenow="5" aria-label="Tingkat Stres">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="Heart_Rate">Detak Jantung (BPM):</label>
+        <input class="input-box" type="number" id="Heart_Rate" min="40" max="200" required placeholder="cth: 70" aria-label="Detak Jantung">
+      </div>
+
+      <div class="input-group">
+        <label for="Daily_Steps">Langkah Harian:</label>
+        <input class="input-box" type="number" id="Daily_Steps" min="0" max="30000" required placeholder="cth: 8000" aria-label="Langkah Harian">
+      </div>
+
+      <div class="alert" id="inputMsg"></div>
+      <div class="loader" id="loader">⏳ Menyimpan data, mohon tunggu...</div>
+      <button class="button-main" type="submit">Kirim &amp; Analisis</button>
+      <button class="button-outline" type="button" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Setup Supabase
+    const supabaseUrl = 'https://vnbqtnhcxlhygfajoulf.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuYnF0bmhjeGxoeWdmYWpvdWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MjEwOTQsImV4cCI6MjA2NTI5NzA5NH0.iFEHsnjgufQuZ6kcaH1gtNT9qyNFfCu8JuxW_clgKRc';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    let userProfile = {};
+    let userId = null;
+
+    async function fillProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        window.location.href = "login-user.html";
+        return;
+      }
+      userId = user.id;
+      sessionStorage.setItem("user_id", userId);
+
+      userProfile = user.user_metadata || {};
+      // Profile grid
+      document.getElementById("userProfile").innerHTML = `
+        <div class="profile-label">Nama:</div><div class="profile-value">${userProfile.name || '-'}</div>
+        <div class="profile-label">Gender:</div><div class="profile-value">${userProfile.gender || '-'}</div>
+        <div class="profile-label">Umur:</div><div class="profile-value">${userProfile.age || '-'}</div>
+        <div class="profile-label">Pekerjaan:</div><div class="profile-value">${userProfile.occupation || '-'}</div>
+        <div class="profile-label">BMI:</div><div class="profile-value">${userProfile.bmi_category || '-'}</div>
+      `;
     }
-    fetchPrediction();
+    fillProfile();
+
+    // Slider display UX
+    const activitySlider = document.getElementById("Physical_Activity_Level");
+    const stressSlider = document.getElementById("Stress_Level");
+    activitySlider.oninput = function() {
+      document.getElementById("physicalActivityValue").innerText = this.value;
+      this.setAttribute('aria-valuenow', this.value);
+    };
+    stressSlider.oninput = function() {
+      document.getElementById("stressLevelValue").innerText = this.value;
+      this.setAttribute('aria-valuenow', this.value);
+    };
+
+    // Show/hide alert
+    function showAlert(msg, isError=true) {
+      const el = document.getElementById("inputMsg");
+      el.style.display = 'block';
+      el.style.color = isError ? '#e11d48' : '#16a34a';
+      el.style.background = isError ? '#fff1f2' : '#f0fff4';
+      el.style.borderColor = isError ? '#ffe4e6' : '#bbf7d0';
+      el.innerText = msg;
+    }
+    function hideAlert() { document.getElementById("inputMsg").style.display = 'none'; }
+
+    // Loader
+    function showLoader(msg) {
+      document.getElementById("loader").innerText = msg || '⏳ Menyimpan data, mohon tunggu...';
+      document.getElementById("loader").style.display = 'block';
+    }
+    function hideLoader() {
+      document.getElementById("loader").style.display = 'none';
+    }
+
+    // Submit handler
+    document.getElementById("sleepForm").onsubmit = async function(e) {
+      e.preventDefault();
+      hideAlert();
+      showLoader();
+
+      const activity = parseInt(activitySlider.value);
+      const stress = parseInt(stressSlider.value);
+      const heart = parseInt(document.getElementById("Heart_Rate").value);
+      const steps = parseInt(document.getElementById("Daily_Steps").value);
+
+      // Validasi
+      if (isNaN(heart) || heart < 40 || heart > 200) {
+        hideLoader();
+        showAlert("Detak jantung harus antara 40–200 BPM.");
+        return;
+      }
+      if (isNaN(steps) || steps < 0 || steps > 30000) {
+        hideLoader();
+        showAlert("Langkah harian harus antara 0–30000.");
+        return;
+      }
+
+      try {
+        const { data: insertData, error } = await supabase.from("sleep_data").insert([{
+          user_id: userId,
+          physical_activity_level: activity,
+          stress_level: stress,
+          heart_rate: heart,
+          daily_steps: steps,
+          created_at: new Date()
+        }]).select("id").single();
+        if (error) throw error;
+        sessionStorage.setItem("sleep_input", JSON.stringify({
+          gender: userProfile.gender,
+          age: userProfile.age,
+          occupation: userProfile.occupation,
+          bmi_category: userProfile.bmi_category,
+          Physical_Activity_Level: activity,
+          Stress_Level: stress,
+          Heart_Rate: heart,
+          Daily_Steps: steps,
+          sleep_data_id: insertData.id
+        }));
+        hideLoader();
+        showAlert("Data berhasil disimpan!", false);
+        setTimeout(()=>{window.location.href = "hasil-prediksi.html";}, 800);
+      } catch (err) {
+        hideLoader();
+        showAlert("Gagal input data: " + (err.message || err));
+      }
+    };
   </script>
 </body>
 </html>
