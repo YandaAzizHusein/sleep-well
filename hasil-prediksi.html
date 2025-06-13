@@ -6,43 +6,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/logo-sinyal-tenang.png"/>
   <style>
-    body { margin:0; font-family:'Segoe UI','Inter',Arial,sans-serif; background:linear-gradient(135deg,#e0e7ff 0%,#f6dfff 100%); min-height:100vh;}
+    body {margin:0;font-family:'Inter','Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#e0e7ff 0%,#f6dfff 100%);min-height:100vh;}
     .wrap {display:flex;align-items:center;justify-content:center;min-height:100vh;}
     .card {
-      background:#fff; max-width:430px; width:100%; border-radius:1.6rem;
-      box-shadow:0 8px 40px 0 rgba(103,81,239,0.13);
-      padding:38px 26px 26px 26px; margin: 36px 0; display:flex;flex-direction:column;gap:18px;animation:fadein .6s;
+      background:#fff; max-width:420px; width:100%; border-radius:2rem;
+      box-shadow:0 8px 40px 0 rgba(103,81,239,.13);
+      padding:38px 28px 28px 28px; margin:44px 0; display:flex;flex-direction:column;gap:24px; animation:fadein .7s;
     }
-    @keyframes fadein { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:none;}}
-    .title {font-size:1.3rem;font-weight:800;color:#2563eb;margin-bottom:2px;}
-    .sub {font-size:1rem;font-weight:600;color:#888;margin-bottom:7px;}
-    .result-box {background:#f7f8fd;border-radius:10px;padding:14px 16px;font-size:1.12rem;color:#232;}
-    .row {margin:7px 0;}
-    .label {color:#888;font-weight:600;}
-    .value {font-weight:700;}
-    .btn {margin-top:16px;background:linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
-      color:#fff;border:none;font-size:1.13rem;font-weight:700;
-      border-radius:1.1em;padding:1em 0;cursor:pointer;width:100%;
-      transition:background .17s,transform .13s,box-shadow .13s;}
-    .btn:hover {background:linear-gradient(90deg,#2563eb 10%,#6751ef 100%);transform:translateY(-1.5px) scale(1.015);}
-    .alert {text-align:center;color:#e11d48;background:#fff1f2;border:1.2px solid #ffe4e6;
-      border-radius:8px;padding:8px 12px;margin:4px 0 8px 0;font-size:.98rem;font-weight:500;display:none;}
-    .loader {text-align:center;color:#2563eb;font-weight:600;margin:8px 0;display:none;}
-    @media(max-width:600px){.card{max-width:98vw;padding:18px 4vw 16px 4vw;}}
+    @keyframes fadein {from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:none;}}
+    .title {font-size:1.33rem;font-weight:800;color:#2563eb;}
+    .profilebox {font-size:.99rem;color:#666;margin-bottom:4px;border-radius:8px;padding:8px 10px;background:#f7f8fd;}
+    .result-list {margin-top:10px;}
+    .result-item {display:flex;align-items:center;gap:14px;margin-bottom:17px;}
+    .result-icon {font-size:1.88em;background:#e0e7ff;border-radius:1em;padding:7px;}
+    .result-label {font-size:.97em;color:#999;}
+    .result-value {font-size:1.21em;font-weight:700;color:#36374a;}
+    .alert, .notif {text-align:center;padding:8px 12px;border-radius:8px;margin:4px 0 4px 0;font-size:.97rem;display:none;}
+    .alert {color:#e11d48;background:#fff1f2;border:1.2px solid #ffe4e6;}
+    .notif {color:#2563eb;background:#e0e7ff;border:1.2px solid #dbeafe;}
+    .loader {display:none;text-align:center;color:#2563eb;font-weight:600;margin:8px 0;}
+    .btn-main {
+      width:100%;margin-top:10px;background:linear-gradient(90deg,#6751ef 30%,#2563eb 100%);
+      color:#fff;border:none;font-size:1.13rem;font-weight:700;border-radius:1.1em;padding:1em 0;cursor:pointer;
+      transition:background .17s,transform .13s,box-shadow .13s;box-shadow:0 2px 14px 0 rgba(103,81,239,0.09);
+    }
+    .btn-main:hover {background:linear-gradient(90deg,#2563eb 10%,#6751ef 100%);transform:translateY(-1.5px) scale(1.015);}
+    .btn-link {
+      width:100%;margin-top:5px;background:#f7faff;color:#2563eb;border:1.2px solid #e0e7ff;
+      font-size:1rem;font-weight:700;border-radius:1.1em;padding:.9em 0;cursor:pointer;transition:background .13s;
+    }
+    .btn-link:hover {background:#e0e7ff;}
+    .btn-cbti {
+      width:100%;margin-top:18px;background:linear-gradient(90deg,#38b6ff 0%,#a084e8 100%);
+      color:#fff;border:none;font-size:1.09rem;font-weight:700;border-radius:1.1em;padding:.95em 0;cursor:pointer;
+      transition:background .17s,transform .13s,box-shadow .13s;box-shadow:0 2px 14px 0 #a084e84d;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .btn-cbti:hover {background:linear-gradient(90deg,#a084e8 0%,#38b6ff 100%);}
+    @media(max-width:600px){.card{max-width:98vw;padding:16px 4vw 12px 4vw;}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="title">Hasil Prediksi Tidur</div>
-      <div class="sub" id="profileBox"></div>
-      <div class="result-box" id="predictionResult">
-        <!-- Hasil prediksi tampil di sini -->
-      </div>
-      <div class="loader" id="loader">⏳ Mengupdate hasil prediksi...</div>
+      <div class="title">Hasil Prediksi Tidur Anda</div>
+      <div class="profilebox" id="profileBox"></div>
+      <div class="result-list" id="resultList"></div>
+      <div class="loader" id="loader">⏳ Menyimpan hasil prediksi...</div>
       <div class="alert" id="alertMsg"></div>
-      <button class="btn" onclick="window.location.href='riwayat.html'">Lihat Riwayat & Grafik</button>
-      <button class="btn" style="background:#f3f5fb;color:#2563eb;margin-top:2px;" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+      <div class="notif" id="notifMsg"></div>
+      <button class="btn-main" onclick="window.location.href='riwayat.html'">Lihat Riwayat & Grafik</button>
+      <button class="btn-link" onclick="window.location.href='main-menu.html'">Kembali ke Menu</button>
+      <button id="cbtiBtn" class="btn-cbti">
+        <span>💡</span> Lihat CBT-I Lengkap & Tips Praktis
+      </button>
     </div>
   </div>
 
@@ -64,19 +81,46 @@
       el.style.display = "block"; el.innerText = msg;
     }
     function hideAlert() { document.getElementById("alertMsg").style.display = "none"; }
+    function showNotif(msg) {
+      const el = document.getElementById("notifMsg");
+      el.style.display = "block"; el.innerText = msg;
+      setTimeout(()=>{el.style.display='none';},2200);
+    }
 
     function tampilProfil() {
       const p = sleepInput;
       document.getElementById("profileBox").innerHTML =
-        `<span class="label">Nama:</span> <span class="value">${p.name || '-'}</span> | 
-         <span class="label">Gender:</span> <span class="value">${p.gender || '-'}</span> | 
-         <span class="label">Umur:</span> <span class="value">${p.age || '-'}</span> | 
-         <span class="label">Pekerjaan:</span> <span class="value">${p.occupation || '-'}</span> | 
-         <span class="label">BMI:</span> <span class="value">${p.bmi_category || '-'}</span>`;
+        `<b>${p.name || '-'}</b> • <span>${p.gender || '-'}</span> • <span>Umur: ${p.age || '-'}</span>
+         <br><span>Pekerjaan: ${p.occupation || '-'}</span> • <span>BMI: ${p.bmi_category || '-'}</span>`;
+    }
+
+    // CBTI Saran Personal: Logika kombinasi 3 output
+    function getCbtiLink({ disorder, quality, duration }) {
+      disorder = (disorder || "").toLowerCase();
+      quality = Number(quality) || 0;
+      duration = Number(duration) || 0;
+
+      // Sleep Apnea
+      if (disorder.includes("apnea")) {
+        if (quality < 75 || duration < 6) return "cbti/cbt-apnea-akut.html";
+        return "cbti/cbt-apnea-sleephyigene.html"; // contoh file maintenance/umum apnea
+      }
+      // Insomnia
+      if (disorder.includes("insomnia")) {
+        if (quality < 70 || duration < 5.5) return "cbti/cbt-insomnia-akut.html";
+        if (quality < 80 || duration < 7) return "cbti/cbt-insomnia-kognitif.html";
+        return "cbti/cbt-insomnia-maintenance.html";
+      }
+      // Tidak ada gangguan
+      if (disorder === "none" || disorder === "-" || disorder === "normal") {
+        if (quality < 75) return "cbti/cbt-hygiene-buruk.html";
+        if (duration < 6) return "cbti/cbt-tidurpendek.html";
+        return "cbti/cbt-umum.html";
+      }
+      return "cbti/cbt-umum.html";
     }
 
     async function runPredictionAndUpdate() {
-      // 1. Ambil data dari sessionStorage
       try {
         sleepInput = JSON.parse(sessionStorage.getItem("sleep_input") || "{}");
         sleep_data_id = sleepInput.sleep_data_id;
@@ -84,19 +128,40 @@
 
       tampilProfil();
 
-      // 2. [SIMULASI] Hasil prediksi dummy, ganti dengan hasil model kamu jika sudah live
-      const predictedQuality = Math.floor(Math.random()*30)+70;   // ex: 70-99
-      const predictedDuration = (Math.random()*2+6).toFixed(1);   // ex: 6.0-8.0 jam
-      const predictedDisorder = predictedQuality < 75 ? "Insomnia Ringan" : (predictedQuality < 85 ? "Tidur Kurang" : "Normal");
+      // --- Hasil prediksi dummy, ganti dengan hasil model aslinya ---
+      // Ganti dengan output model ML jika sudah connect API/backend
+      const predictedQuality = Math.floor(Math.random()*30)+70;    // ex: 70-99
+      const predictedDuration = (Math.random()*2+6).toFixed(1);    // ex: 6.0-8.0
+      // Hanya "Insomnia", "Sleep Apnea", "None"
+      const possibleDisorders = ["Insomnia","Sleep Apnea","None"];
+      const predictedDisorder = possibleDisorders[Math.floor(Math.random()*3)];
 
-      // 3. Tampilkan di halaman
-      document.getElementById("predictionResult").innerHTML =
-        `<div class="row"><span class="label">Kualitas Tidur:</span> <span class="value">${predictedQuality} / 100</span></div>
-         <div class="row"><span class="label">Durasi Tidur:</span> <span class="value">${predictedDuration} jam</span></div>
-         <div class="row"><span class="label">Gangguan Tidur:</span> <span class="value">${predictedDisorder}</span></div>`;
+      document.getElementById("resultList").innerHTML = `
+        <div class="result-item">
+          <span class="result-icon">🌙</span>
+          <div>
+            <div class="result-label">Kualitas Tidur</div>
+            <div class="result-value">${predictedQuality} / 100</div>
+          </div>
+        </div>
+        <div class="result-item">
+          <span class="result-icon">⏰</span>
+          <div>
+            <div class="result-label">Durasi Tidur</div>
+            <div class="result-value">${predictedDuration} jam</div>
+          </div>
+        </div>
+        <div class="result-item">
+          <span class="result-icon">🩺</span>
+          <div>
+            <div class="result-label">Gangguan Tidur</div>
+            <div class="result-value">${predictedDisorder}</div>
+          </div>
+        </div>
+      `;
 
-      // 4. Update ke Supabase
-      showLoader(true, "⏳ Mengupdate hasil prediksi...");
+      // --- Update ke Supabase ---
+      showLoader(true, "⏳ Menyimpan hasil prediksi...");
       hideAlert();
       try {
         const { error } = await supabase.from('sleep_data')
@@ -108,13 +173,19 @@
           .eq('id', sleep_data_id);
         showLoader(false);
         if (error) showAlert("Gagal update hasil prediksi: " + error.message);
+        else showNotif("Hasil prediksi berhasil disimpan!");
+        // Set link tombol CBTI sesuai hasil personalized
+        document.getElementById("cbtiBtn").onclick = () => window.location.href=getCbtiLink({
+          disorder: predictedDisorder,
+          quality: predictedQuality,
+          duration: predictedDuration
+        });
       } catch (err) {
         showLoader(false);
         showAlert("Gagal update data: " + (err.message || err));
       }
     }
 
-    // Jalankan prediksi dan update setelah halaman siap
     window.onload = runPredictionAndUpdate;
   </script>
 </body>
